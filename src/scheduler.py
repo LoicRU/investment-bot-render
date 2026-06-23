@@ -1,8 +1,8 @@
 """
-Scheduler - Scans automatiques
-Mode WEEKLY (défaut free tier) : 1 scan/semaine le lundi 8h UTC
-Mode DAILY  : 1 scan/jour à 8h UTC (consomme plus de tokens)
-Configurable via variable d'env SCAN_MODE=weekly|daily
+Scheduler — scans automatiques
+SCAN_MODE=weekly  → chaque lundi 8h UTC (10h Paris) — recommandé
+SCAN_MODE=daily   → chaque jour 8h UTC
+ALERT_THRESHOLD   → score minimum pour alerte (défaut 75)
 """
 import asyncio
 import logging
@@ -14,46 +14,44 @@ from apscheduler.triggers.cron import CronTrigger
 
 logger = logging.getLogger("scheduler")
 
-ALERT_THRESHOLD = int(os.environ.get("ALERT_THRESHOLD", "75"))
-SCAN_MODE       = os.environ.get("SCAN_MODE", "weekly")   # weekly | daily
+THRESHOLD = int(os.environ.get("ALERT_THRESHOLD", "75"))
+MODE      = os.environ.get("SCAN_MODE", "weekly")
 
 
 async def run_scan_once(notifier):
-    from src.screener import Screener, WATCHLIST_ALL
-    from src.scorer import AIScorer
+    from src.screener import Screener, WATCHLIST
+    from src.scorer   import AIScorer
     from src.database import Database
 
     db       = Database()
     screener = Screener()
     scorer   = AIScorer()
 
-    logger.info(f"=== Scan démarré [{SCAN_MODE}] : {datetime.utcnow().isoformat()} ===")
+    logger.info(f"=== Scan [{MODE}] démarré : {datetime.utcnow().isoformat()} ===")
 
-    personal_wl      = db.get_watchlist()
-    tickers_to_scan  = list(set(WATCHLIST_ALL + personal_wl))
+    # Fusionner watchlist perso + liste par défaut
+    all_tickers = list(set(WATCHLIST + db.get_watchlist()))
 
-    # 1. Filtre initial sans IA
-    candidates = screener.scan(tickers_to_scan)
-    logger.info(f"{len(candidates)} candidats après filtre initial")
+    # 1. Filtre sans IA
+    candidates = screener.scan(all_tickers)
 
-    # 2. Scoring IA (limité à 20 par scan en mode free)
-    max_batch = 20 if SCAN_MODE == "weekly" else 10
-    results   = scorer.score_batch(candidates, max_batch=max_batch)
-    logger.info(f"{len(results)} résultats ≥ 70/100")
+    # 2. Scoring IA Groq (max 30 en weekly, 15 en daily)
+    max_b   = 30 if MODE == "weekly" else 15
+    results = scorer.score_batch(candidates, max_batch=max_b)
 
     # 3. Alertes
     alerted = []
-    for result in results:
-        db.save_score(result)
-        if result.total_score >= ALERT_THRESHOLD and not db.already_alerted_today(result.ticker):
-            sent = await notifier.send_alert(result)
+    for r in results:
+        db.save_score(r)
+        if r.total_score >= THRESHOLD and not db.already_alerted_today(r.ticker):
+            sent = await notifier.send_alert(r)
             if sent:
-                db.log_alert(result.ticker, result.total_score, "telegram")
-                alerted.append(result)
+                db.log_alert(r.ticker, r.total_score)
+                alerted.append(r)
                 await asyncio.sleep(1)
 
-    await notifier.send_summary(alerted, scan_count=len(tickers_to_scan))
-    logger.info(f"=== Scan terminé : {len(alerted)} alertes envoyées ===")
+    await notifier.send_summary(alerted, total=len(all_tickers))
+    logger.info(f"=== Scan terminé : {len(alerted)} alertes ===")
     return results
 
 
@@ -62,29 +60,25 @@ class InvestmentScheduler:
         self.notifier  = notifier
         self.scheduler = AsyncIOScheduler(timezone="UTC")
 
-    def _setup_jobs(self):
-        if SCAN_MODE == "weekly":
-            # Lundi 8h00 UTC = 10h00 Paris
+    def _setup(self):
+        if MODE == "weekly":
             trigger = CronTrigger(day_of_week="mon", hour=8, minute=0)
-            name    = "Scan hebdomadaire (lundi 10h Paris)"
+            label   = "Lundi 8h UTC (10h Paris)"
         else:
-            # Daily : chaque jour 8h00 UTC
             trigger = CronTrigger(hour=8, minute=0)
-            name    = "Scan quotidien (8h UTC)"
+            label   = "Quotidien 8h UTC"
 
         self.scheduler.add_job(
-            run_scan_once,
-            trigger,
+            run_scan_once, trigger,
             args=[self.notifier],
-            id="main_scan",
-            name=name,
+            id="scan", name=label,
             replace_existing=True,
             misfire_grace_time=600,
         )
-        logger.info(f"Job planifié : {name}")
+        logger.info(f"Job planifié : {label}")
 
     async def run(self):
-        self._setup_jobs()
+        self._setup()
         self.scheduler.start()
         logger.info("Scheduler démarré")
         while True:

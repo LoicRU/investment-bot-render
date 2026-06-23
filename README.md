@@ -1,91 +1,92 @@
-# 🤖 Investment Bot IA — Déploiement Render (Gratuit)
+# 🤖 Investment Bot IA — 100% Gratuit à vie
 
-Scan automatique · Scoring Claude IA · Alertes Telegram · **100% gratuit**
-
----
-
-## Coût réel
-
-| Service | Plan | Coût |
-|---------|------|------|
-| Render Worker | Free | 0$ |
-| Claude API | Free tier (5$ offerts) | 0$ ~2-4 mois |
-| yfinance | Gratuit | 0$ |
-| Telegram Bot | Gratuit | 0$ |
-| **Total** | | **0$/mois** |
-
-> Après épuisement des 5$ : recharger 5$ sur console.anthropic.com
-> pour encore ~2-4 mois, soit ~2$/mois en mode weekly.
+Scan automatique · Groq IA (Llama 3.3 70B) · Alertes Telegram · Render free tier
 
 ---
 
-## Déploiement en 4 étapes (20 min)
+## Coût : 0$ pour toujours
 
-### 1. Créer ton bot Telegram
+| Service | Plan | Limite | Coût |
+|---------|------|--------|------|
+| **Render** | Free Worker | Tourne 24h/24 | 0$ |
+| **Groq API** | Free | 14 400 req/jour | 0$ |
+| **yfinance** | Gratuit | Illimité | 0$ |
+| **Telegram** | Gratuit | Illimité | 0$ |
+| **Total** | | | **0$/mois** |
+
+---
+
+## Déploiement en 4 étapes (25 min)
+
+### Étape 1 — Clé Groq (5 min)
+
+1. Va sur **[console.groq.com](https://console.groq.com)**
+2. Crée un compte gratuit (email suffit, pas de CB)
+3. **API Keys** → **Create API Key**
+4. Copie la clé : `gsk_XXXX...`
+
+### Étape 2 — Bot Telegram (5 min)
 
 1. Ouvre Telegram → cherche **@BotFather**
-2. Tape `/newbot` → donne un nom (ex: `MonInvestBot`)
-3. Copie le **token** → `1234567890:AAFxxx...`
-4. Envoie `/start` à ton nouveau bot
-5. Ouvre dans ton navigateur :
+2. Tape `/newbot` → donne un nom → copie le **token**
+3. Envoie `/start` à ton nouveau bot
+4. Ouvre dans ton navigateur :
    `https://api.telegram.org/bot<TON_TOKEN>/getUpdates`
-6. Cherche `"chat":{"id":` → copie le nombre = ton **CHAT_ID**
+5. Cherche `"chat":{"id":XXXXXXX}` → copie ce nombre = **CHAT_ID**
 
-### 2. Obtenir ta clé Claude API (gratuite)
-
-1. Va sur [console.anthropic.com](https://console.anthropic.com)
-2. Crée un compte (gratuit)
-3. **API Keys** → **Create Key**
-4. Copie la clé `sk-ant-...`
-
-### 3. Mettre le code sur GitHub
+### Étape 3 — Mettre sur GitHub (5 min)
 
 ```bash
+# Dézippe le projet, puis dans le dossier :
 git init
 git add .
-git commit -m "Investment bot initial"
-# Créer un repo sur github.com puis :
+git commit -m "Investment bot"
+
+# Sur github.com → New repository → copie l'URL puis :
 git remote add origin https://github.com/TON_USER/investment-bot.git
 git push -u origin main
 ```
 
-### 4. Déployer sur Render
+### Étape 4 — Déployer sur Render (10 min)
 
-1. Va sur [render.com](https://render.com) → **New** → **Background Worker**
-2. Connecte ton repo GitHub
-3. Configure :
+1. Va sur **[render.com](https://render.com)** → créer un compte gratuit
+2. **New** → **Background Worker**
+3. Connecte ton compte GitHub → sélectionne ton repo
+4. Configure :
    - **Runtime** : Python 3
    - **Build Command** : `pip install -r requirements.txt`
    - **Start Command** : `python main.py`
-4. Dans **Environment Variables**, ajoute :
+5. Dans **Environment Variables**, ajoute :
 
 ```
-ANTHROPIC_API_KEY  →  sk-ant-XXXX
-TELEGRAM_TOKEN     →  1234567890:AAFxxx
+GROQ_API_KEY       →  gsk_XXXX...
+TELEGRAM_TOKEN     →  1234567890:AAFxxx...
 TELEGRAM_CHAT_ID   →  123456789
 SCAN_MODE          →  weekly
 ALERT_THRESHOLD    →  75
-CLAUDE_MODEL       →  claude-haiku-4-5-20251001
 ```
 
-5. Clique **Create Background Worker** → déploiement automatique ✅
+6. Clique **Create Background Worker** → 🎉 Déployé !
 
 ---
 
 ## Commandes Telegram
 
-```
-/start       — Démarre le bot
-/help        — Liste des commandes
-/scan        — Lance un scan immédiat
-/top         — Top 10 opportunités en base
-/analyse NVDA — Analyse un ticker précis
-/watchlist   — Ta watchlist personnelle
-```
+| Commande | Action |
+|----------|--------|
+| `/start` | Démarre le bot |
+| `/help` | Liste des commandes |
+| `/scan` | Lance un scan immédiat |
+| `/top` | Top 10 opportunités en base |
+| `/analyse NVDA` | Analyse un ticker précis |
+| `/watchlist` | Ta liste personnelle |
+| `/ajouter NVDA` | Ajoute un ticker |
+| `/supprimer NVDA` | Retire un ticker |
+| `/status` | État du bot |
 
 ---
 
-## Système de scoring (100 pts)
+## Scoring (100 points)
 
 | Critère | Max |
 |---------|-----|
@@ -99,13 +100,25 @@ CLAUDE_MODEL       →  claude-haiku-4-5-20251001
 | Valorisation | 10 pts |
 | Risques | -5 à 0 |
 
-**Seuils :** 🚀 ≥90 Exceptionnel · 🟢 ≥80 Forte conviction · 🟡 ≥75 Potentiel
+**Seuils :** 🚀 ≥90 · 🟢 ≥80 · 🟡 ≥75 · 🔴 <70
 
 ---
 
-## Personnalisation
+## Personnaliser les tickers
 
-- **Tickers surveillés** → `src/screener.py` → `WATCHLIST_NASDAQ`
-- **Critères de filtre** → `src/screener.py` → constantes `MIN_*`
-- **Fréquence** → variable `SCAN_MODE=weekly` ou `daily`
-- **Seuil alerte** → variable `ALERT_THRESHOLD=75`
+Édite `src/screener.py` → liste `WATCHLIST` :
+
+```python
+WATCHLIST = [
+    "NVDA", "AMD", "TON_TICKER",
+    # Ajoute autant de tickers que tu veux
+]
+```
+
+---
+
+## Changer la fréquence des scans
+
+Dans Render → Environment :
+- `SCAN_MODE=weekly` → chaque lundi (recommandé)
+- `SCAN_MODE=daily` → chaque jour à 8h UTC

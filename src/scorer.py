@@ -1,15 +1,16 @@
 """
-Scorer IA - Analyse fondamentale via Claude API
-Version optimisée tokens : prompt compact, haiku au lieu de sonnet,
-batch limité pour rester dans le free tier.
+Scorer IA — Groq API (100% gratuit, 14 400 req/jour)
+Modèle : llama-3.3-70b-versatile
+Inscription : https://console.groq.com (gratuit, pas de CB)
 """
 import json
 import logging
 import os
 import re
+import time
 from dataclasses import dataclass
 
-import anthropic
+from groq import Groq
 
 from src.screener import TickerData
 
@@ -28,100 +29,90 @@ class ScoreResult:
     price_target_bull: str
     price_target_base: str
     safety_margin: str
-    raw_response: str = ""
 
 
-# Prompt compact — 3x moins de tokens que la version complète
-SCORING_PROMPT = """Analyste buy-side senior. Note cette action sur 100 pts.
+PROMPT = """Tu es un analyste buy-side senior spécialisé small/mid caps.
+Note cette action sur 100 pts et réponds UNIQUEMENT en JSON valide.
 
-{ticker} | {company_name} | {sector}
-Cap: {market_cap_m:.0f}M$ | CA+{revenue_growth:.0f}% | MB:{gross_margin:.0f}% | MO:{operating_margin:.0f}% | MN:{net_margin:.0f}%
-FCF:{fcf_margin:.0f}% | ROE:{roe:.0f}% | D/E:{debt_to_equity:.1f} | CR:{current_ratio:.1f}
-EV/EBITDA:{ev_ebitda:.1f}x | PE:{pe_ratio:.0f}x | PS:{ps_ratio:.1f}x
-{description_short}
+{ticker} | {company_name} | {sector} | {industry}
+Cap: {cap_m:.0f}M$ | CA+{rev_g:.0f}% | MB:{gm:.0f}% | MO:{om:.0f}% | MN:{nm:.0f}%
+FCF margin:{fcfm:.0f}% | ROE:{roe:.0f}% | D/E:{de:.1f} | CR:{cr:.1f}
+EV/EBITDA:{eveb:.1f}x | PE:{pe:.0f}x | PS:{ps:.1f}x
+{desc}
 
-JSON UNIQUEMENT (pas de texte avant/après) :
-{{"ticker":"{ticker}","company_name":"{company_name}","total_score":0,"scores":{{"croissance":0,"rentabilite":0,"cashflow":0,"dette":0,"management":0,"moat":0,"tam":0,"valorisation":0,"risques":0}},"max_scores":{{"croissance":20,"rentabilite":15,"cashflow":15,"dette":10,"management":15,"moat":10,"tam":10,"valorisation":10,"risques":0}},"conviction":"FORTE CONVICTION","thesis":"3 phrases max.","risks":"2 risques max.","price_target_bull":"+X% sur 3 ans","price_target_base":"+Y% sur 3 ans","safety_margin":"Z%"}}"""
+Barème : Croissance/20 · Rentabilité/15 · Cashflow/15 · Dette/10 · Management/15 · Moat/10 · TAM/10 · Valorisation/10 · Risques(0 à -5)
 
-CONVICTION_LABELS = {90: "EXCEPTIONNEL", 80: "FORTE CONVICTION", 70: "POTENTIEL", 0: "REJET"}
+{{"ticker":"{ticker}","company_name":"{company_name}","total_score":75,"scores":{{"croissance":15,"rentabilite":12,"cashflow":11,"dette":8,"management":11,"moat":8,"tam":7,"valorisation":7,"risques":-4}},"conviction":"FORTE CONVICTION","thesis":"Thèse en 2-3 phrases.","risks":"2 risques principaux.","price_target_bull":"+80% sur 3 ans","price_target_base":"+40% sur 3 ans","safety_margin":"25%"}}"""
+
+LABELS = {90: "🚀 EXCEPTIONNEL", 80: "🟢 FORTE CONVICTION", 70: "🟡 POTENTIEL", 0: "🔴 REJET"}
+
+
+def conviction_label(score: int) -> str:
+    for t, l in sorted(LABELS.items(), reverse=True):
+        if score >= t:
+            return l
+    return "🔴 REJET"
 
 
 class AIScorer:
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-        # haiku-3 = ~20x moins cher que sonnet, largement suffisant pour le scoring
-        self.model = os.environ.get("CLAUDE_MODEL", "claude-haiku-4-5-20251001")
+        self.client = Groq(api_key=os.environ["GROQ_API_KEY"])
+        self.model  = "llama-3.3-70b-versatile"
 
-    def _conviction(self, score: int) -> str:
-        for t, l in sorted(CONVICTION_LABELS.items(), reverse=True):
-            if score >= t:
-                return l
-        return "REJET"
-
-    def score_ticker(self, data: TickerData) -> ScoreResult | None:
-        prompt = SCORING_PROMPT.format(
-            ticker=data.ticker,
-            company_name=data.company_name,
-            sector=data.sector,
-            market_cap_m=data.market_cap / 1_000_000,
-            revenue_growth=data.revenue_growth_yoy,
-            gross_margin=data.gross_margin,
-            operating_margin=data.operating_margin,
-            net_margin=data.net_margin,
-            fcf_margin=data.fcf_margin,
-            roe=data.roe,
-            debt_to_equity=data.debt_to_equity,
-            current_ratio=data.current_ratio,
-            ev_ebitda=data.ev_ebitda,
-            pe_ratio=data.pe_ratio,
-            ps_ratio=data.ps_ratio,
-            description_short=(data.description or "")[:200],
+    def score(self, d: TickerData) -> ScoreResult | None:
+        prompt = PROMPT.format(
+            ticker=d.ticker, company_name=d.company_name,
+            sector=d.sector, industry=d.industry,
+            cap_m=d.market_cap / 1_000_000,
+            rev_g=d.revenue_growth_yoy, gm=d.gross_margin,
+            om=d.operating_margin, nm=d.net_margin,
+            fcfm=d.fcf_margin, roe=d.roe,
+            de=d.debt_to_equity, cr=d.current_ratio,
+            eveb=d.ev_ebitda, pe=d.pe_ratio, ps=d.ps_ratio,
+            desc=(d.description or "")[:200],
         )
-
         try:
-            response = self.client.messages.create(
+            resp = self.client.chat.completions.create(
                 model=self.model,
-                max_tokens=600,       # réduit pour économiser
                 messages=[{"role": "user", "content": prompt}],
+                max_tokens=500,
+                temperature=0.1,
             )
-            raw = response.content[0].text.strip()
+            raw   = resp.choices[0].message.content.strip()
             clean = re.sub(r"```json|```", "", raw).strip()
-            parsed = json.loads(clean)
-            total = parsed.get("total_score", 0)
+
+            # Extraire le JSON si du texte parasite entoure
+            match = re.search(r"\{.*\}", clean, re.DOTALL)
+            if match:
+                clean = match.group()
+
+            p = json.loads(clean)
+            total = int(p.get("total_score", 0))
             return ScoreResult(
-                ticker=data.ticker,
-                company_name=data.company_name,
+                ticker=d.ticker,
+                company_name=d.company_name,
                 total_score=total,
-                scores=parsed.get("scores", {}),
-                conviction=parsed.get("conviction", self._conviction(total)),
-                thesis=parsed.get("thesis", ""),
-                risks=parsed.get("risks", ""),
-                price_target_bull=parsed.get("price_target_bull", "N/A"),
-                price_target_base=parsed.get("price_target_base", "N/A"),
-                safety_margin=parsed.get("safety_margin", "N/A"),
-                raw_response=raw,
+                scores=p.get("scores", {}),
+                conviction=p.get("conviction", conviction_label(total)),
+                thesis=p.get("thesis", ""),
+                risks=p.get("risks", ""),
+                price_target_bull=p.get("price_target_bull", "N/A"),
+                price_target_base=p.get("price_target_base", "N/A"),
+                safety_margin=p.get("safety_margin", "N/A"),
             )
         except Exception as e:
-            logger.error(f"Erreur scoring {data.ticker}: {e}")
+            logger.error(f"Erreur scoring {d.ticker}: {e}")
             return None
 
-    def score_batch(self, candidates: list[TickerData], max_batch: int = 20) -> list[ScoreResult]:
-        """
-        max_batch : limite le nombre de tickers scorés par IA par scan
-        pour rester dans le free tier (~20 appels × 800 tokens = ~16K tokens/scan)
-        """
-        # Trier par croissance décroissante pour scorer les meilleurs en premier
-        sorted_candidates = sorted(
-            candidates,
-            key=lambda d: d.revenue_growth_yoy,
-            reverse=True
-        )[:max_batch]
-
+    def score_batch(self, candidates: list[TickerData], max_batch: int = 30) -> list[ScoreResult]:
+        # Trier par croissance décroissante, prendre les meilleurs candidats
+        top = sorted(candidates, key=lambda x: x.revenue_growth_yoy, reverse=True)[:max_batch]
         results = []
-        for data in sorted_candidates:
-            logger.info(f"Scoring IA ({self.model}): {data.ticker}")
-            result = self.score_ticker(data)
-            if result and result.total_score >= 70:
-                logger.info(f"  → {result.total_score}/100 ({result.conviction})")
-                results.append(result)
+        for d in top:
+            logger.info(f"Scoring : {d.ticker}")
+            r = self.score(d)
+            if r and r.total_score >= 70:
+                logger.info(f"  ✓ {r.total_score}/100 {r.conviction}")
+                results.append(r)
+            time.sleep(0.5)   # respecter le rate limit Groq
         return sorted(results, key=lambda r: r.total_score, reverse=True)

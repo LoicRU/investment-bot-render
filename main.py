@@ -1,6 +1,6 @@
 """
-Investment Bot - Point d'entrée principal
-Lance le scheduler et le bot Telegram simultanément
+Investment Bot — 100% gratuit
+Groq API (Llama 3.3 70B) + yfinance + Telegram + Render
 """
 import asyncio
 import logging
@@ -20,7 +20,7 @@ logger = logging.getLogger("main")
 
 
 async def main():
-    logger.info("=== Investment Bot démarré ===")
+    logger.info("=== Investment Bot démarré (Groq + Render) ===")
 
     notifier = TelegramNotifier(
         token=os.environ["TELEGRAM_TOKEN"],
@@ -29,7 +29,6 @@ async def main():
 
     scheduler = InvestmentScheduler(notifier=notifier)
 
-    # Démarrer le scheduler en arrière-plan
     await asyncio.gather(
         scheduler.run(),
         notifier.run_polling(),
