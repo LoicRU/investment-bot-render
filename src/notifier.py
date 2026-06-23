@@ -1,34 +1,36 @@
 """
-Notifier — Telegram avec format rapport final propre
+Notifier v4 — Format rapport final exact demandé
+Données 100% réelles, N/D si manquant
 """
 import logging
 import aiohttp
 from agents.analyzer import FinalReport
+from agents.collector import CompanyData
 
 logger = logging.getLogger("notifier")
 
-
-def _bar(v, total=100):
+def _bar(v):
     if v is None: return "░░░░░░░░░░ N/D"
-    filled = round(v / total * 10)
+    filled = max(0, min(10, round(v / 10)))
     return "█" * filled + "░" * (10 - filled)
 
 def _stars(n):
+    n = max(0, min(5, n or 0))
     return "★" * n + "☆" * (5 - n)
 
-def _fmt(v, suffix="", decimals=1, prefix=""):
+def _f(v, suf="", dec=2, pre=""):
     if v is None: return "N/D"
-    if isinstance(v, float) and abs(v) >= 1e9:
-        return f"{prefix}{v/1e9:.{decimals}f}Md{suffix}"
-    if isinstance(v, float) and abs(v) >= 1e6:
-        return f"{prefix}{v/1e6:.{decimals}f}M{suffix}"
-    return f"{prefix}{v:.{decimals}f}{suffix}"
+    if isinstance(v, (int, float)):
+        if abs(v) >= 1e9: return f"{pre}{v/1e9:.1f}Md{suf}"
+        if abs(v) >= 1e6: return f"{pre}{v/1e6:.1f}M{suf}"
+        return f"{pre}{v:.{dec}f}{suf}"
+    return str(v)
 
-def _pct(v):
+def _p(v):
     if v is None: return "N/D"
     return f"{v:+.1f}%"
 
-DEC_EMOJI = {
+DEC = {
     "ACHAT FORT": "🟢🟢",
     "ACHETER":    "🟢",
     "SURVEILLER": "🟡",
@@ -46,110 +48,118 @@ class TelegramNotifier:
     async def _send(self, text: str) -> bool:
         try:
             async with aiohttp.ClientSession() as session:
-                payload = {
+                async with session.post(self.url, json={
                     "chat_id":    self.chat_id,
                     "text":       text[:4096],
                     "parse_mode": "Markdown",
-                }
-                async with session.post(self.url, json=payload) as resp:
+                }) as resp:
                     ok = resp.status == 200
                     if not ok:
-                        body = await resp.text()
-                        logger.error(f"Telegram {resp.status}: {body[:200]}")
+                        logger.error(f"Telegram {resp.status}: {await resp.text()[:100]}")
                     return ok
         except Exception as e:
-            logger.error(f"Telegram send error: {e}")
+            logger.error(f"Telegram error: {e}")
             return False
 
-    async def send_report(self, r: FinalReport, d) -> bool:
-        dec_emoji = DEC_EMOJI.get(r.decision.upper(), "📊")
-        stars_str = _stars(r.etoiles)
+    async def send_report(self, r: FinalReport, d: CompanyData) -> bool:
+        dec_e = DEC.get(r.decision.upper(), "📊")
 
-        # Avertissement qualité données
-        quality_warn = ""
+        # Avertissement données
+        dq_warn = ""
         if r.data_quality < 70:
-            quality_warn = f"\n⚠️ _Qualité données: {r.data_quality}/100 — certaines données manquantes_\n"
+            dq_warn = f"\n⚠️ _Qualité données: {r.data_quality}/100_\n"
         if r.missing_fields:
-            quality_warn += f"_Données N/D: {', '.join(r.missing_fields[:4])}_\n"
-
-        # Scores détaillés
-        score_lines = []
-        scores = [
-            ("Qualité globale",  r.score_qualite),
-            ("Croissance",       r.score_croissance),
-            ("Rentabilité",      r.score_rentabilite),
-            ("Management",       r.score_management),
-            ("Valorisation",     r.score_valorisation),
-            ("Risque",           r.score_risque),
-        ]
-        for label, score in scores:
-            val = f"{score}/100" if score is not None else "N/D"
-            score_lines.append(f"  {label:<16} {val}")
-
-        # Insiders
-        insider_str = ""
-        if d.insider_transactions:
-            last = d.insider_transactions[0]
-            insider_str = f"\nDernière transaction: {last['name']} — {last['type']} {last['shares']:,} actions"
-        elif d.recent_insider_buys == 0 and d.recent_insider_sells == 0:
-            insider_str = "\nTransactions insiders: N/D (données non disponibles)"
+            dq_warn += f"_N/D: {', '.join(r.missing_fields[:5])}_\n"
 
         # Valeur intrinsèque
-        vi_str = "N/D (données FCF insuffisantes pour DCF)"
         if r.valeur_intrinseque:
             vi_str = f"${r.valeur_intrinseque:.2f}"
+        else:
+            vi_str = "N/D (FCF insuffisant pour DCF fiable)"
+
+        # Potentiel
+        pot_str = _p(r.potentiel_estime) if r.potentiel_estime else "N/D"
+
+        # Insiders signal
+        ins_emoji = {"très positif":"🟢🟢","positif":"🟢","neutre":"⚪","négatif":"🔴","très négatif":"🔴🔴","insuffisant":"❓"}
+        ins_e = ins_emoji.get(d.insider_net_signal, "❓")
+
+        # Rule of 40 label
+        r40 = d.rule_of_40
+        r40_label = ""
+        if r40 is not None:
+            if r40 >= 60: r40_label = "🏆 Excellent"
+            elif r40 >= 40: r40_label = "✅ Bon"
+            else: r40_label = "⚠️ Insuffisant"
+
+        # Qualité bénéfices
+        eq = d.earnings_quality
+        eq_label = ""
+        if eq is not None:
+            if eq >= 1.2: eq_label = "✅ Excellente"
+            elif eq >= 0.8: eq_label = "✅ Bonne"
+            elif eq >= 0.5: eq_label = "⚠️ Acceptable"
+            else: eq_label = "🔴 Suspecte"
 
         msg = (
-            f"{dec_emoji} *{r.ticker}* — {r.decision}\n"
-            f"_{r.company_name}_\n\n"
-            f"💰 *Prix actuel : ${_fmt(r.current_price, decimals=2)}*\n"
-            f"{quality_warn}\n"
+            f"{dec_e} *{r.ticker}* — {r.decision}\n"
+            f"_{r.company_name}_\n"
+            f"{dq_warn}\n"
 
-            f"━━━━━━━━━━━━━━━━━━━\n"
+            f"💰 *Prix actuel : ${_f(d.current_price)}*\n"
             f"📊 *Score global : {r.score_global or 'N/D'}/100*\n"
             f"`{_bar(r.score_global)}`\n\n"
 
-            f"*Scores détaillés :*\n"
-            f"`{''.join(l + chr(10) for l in score_lines)}`\n"
+            f"━━━━ *SCORES DÉTAILLÉS* ━━━━\n"
+            f"  Qualité globale    {r.score_qualite or 'N/D'}/100\n"
+            f"  Croissance         {r.score_croissance or 'N/D'}/100\n"
+            f"  Rentabilité        {r.score_rentabilite or 'N/D'}/100\n"
+            f"  Management         {r.score_management or 'N/D'}/100\n"
+            f"  Valorisation       {r.score_valorisation or 'N/D'}/100\n"
+            f"  Risque             {r.score_risque or 'N/D'}/100\n\n"
 
-            f"*Conviction : {stars_str}*\n"
-            f"Niveau : {r.conviction}\n\n"
+            f"*Conviction : {_stars(r.etoiles)} {r.conviction}*\n\n"
 
-            f"━━━━━━━━━━━━━━━━━━━\n"
-            f"💵 *Données réelles :*\n"
-            f"CA : {_fmt(d.revenue,'$')} | Croissance : {_pct(d.rev_growth_1y)}\n"
-            f"Marge brute : {_pct(d.gross_margin)} | Marge nette : {_pct(d.net_margin)}\n"
-            f"FCF : {_fmt(d.fcf,'$')} | FCF margin : {_pct(d.fcf_margin)}\n"
-            f"Dette/Equity : {_fmt(d.debt_to_equity)} | Cash : {_fmt(d.cash,'$')}\n"
-            f"PE : {_fmt(d.pe_ratio,'x')} | EV/EBITDA : {_fmt(d.ev_ebitda,'x')}\n"
-            f"Insiders : {_pct(d.insider_ownership)} | Instit : {_pct(d.institutional_ownership)}"
-            f"{insider_str}\n\n"
+            f"━━━━ *DONNÉES RÉELLES* ━━━━\n"
+            f"CA : {_f(d.revenue,'$',1)} | Croissance : {_p(d.rev_growth_1y)}\n"
+            f"Marge brute : {_p(d.gross_margin)} | Nette : {_p(d.net_margin)}\n"
+            f"FCF : {_f(d.fcf,'$',1)} | Marge FCF : {_p(d.fcf_margin)}\n"
+            f"Rule of 40 : {_f(d.rule_of_40,'')} {r40_label}\n"
+            f"Qualité bénéfices : {_f(d.earnings_quality,'')} {eq_label}\n"
+            f"Dilution 3Y : {_p(d.dilution_3y)}\n"
+            f"Cash net : {_f(d.net_cash_position,'$',1)}\n"
+            f"Insiders : {ins_e} {d.insider_net_signal} (achats:{d.recent_insider_buys} ventes:{d.recent_insider_sells})\n"
+            f"Near 52W low : {'✅ OUI' if d.near_52w_low else 'Non'} ({_p(d.pct_from_52w_low)} au-dessus du plus bas)\n\n"
 
-            f"━━━━━━━━━━━━━━━━━━━\n"
-            f"🎯 *Valeur intrinsèque : {vi_str}*\n"
-            f"Potentiel estimé : {_pct(r.potentiel_estime)}\n"
-            f"Target analystes : {_fmt(d.analyst_target,'$')} "
-            f"({d.nb_analysts or 'N/D'} analystes · {d.analyst_recommendation or 'N/D'})\n\n"
+            f"━━━━ *VALORISATION* ━━━━\n"
+            f"Valeur intrinsèque : {vi_str}\n"
+            f"Potentiel estimé : *{pot_str}*\n"
+            f"Prix d'entrée idéal : {r.prix_entree_ideal or 'N/D'}\n"
+            f"Target analystes : ${_f(d.analyst_target)} ({d.nb_analysts or 'N/D'} analystes)\n"
+            f"Upside vs consensus : {_p(d.upside_vs_target)}\n\n"
 
-            f"━━━━━━━━━━━━━━━━━━━\n"
-            f"📋 *Scénarios :*\n"
+            f"━━━━ *SCÉNARIOS* ━━━━\n"
             f"🐻 Pessimiste : {r.scenario_pessimiste or 'N/D'}\n"
             f"📊 Moyen : {r.scenario_moyen or 'N/D'}\n"
-            f"🐂 Optimiste : {r.scenario_optimiste or 'N/D'}"
-        )
+            f"🐂 Optimiste : {r.scenario_optimiste or 'N/D'}\n\n"
 
+            f"━━━━ *SYNTHÈSE* ━━━━\n"
+            f"_{r.synthese or 'N/D'}_\n\n"
+
+            f"_SEC: 10-K={d.sec_10k_date or 'N/D'} | 10-Q={d.sec_10q_date or 'N/D'}_"
+        )
         return await self._send(msg)
 
     async def send_summary(self, reports: list, total: int):
         if not reports:
             msg = f"🔍 *Scan terminé*\n{total} actions analysées\nAucune opportunité détectée."
         else:
-            buy   = [r for r in reports if "ACHAT" in r.decision.upper()]
-            watch = [r for r in reports if "SURVEILLER" in r.decision.upper()]
+            buy   = [r for r in reports if "ACHAT" in (r.decision or "").upper()]
+            watch = [r for r in reports if "SURVEILLER" in (r.decision or "").upper()]
             lines = "\n".join(
-                f"{'🟢' if 'ACHAT' in r.decision.upper() else '🟡'} "
-                f"*{r.ticker}* ${_fmt(r.current_price, decimals=2)} "
-                f"— {r.score_global or 'N/D'}/100 | {_stars(r.etoiles)}"
+                f"{'🟢🟢' if 'FORT' in (r.decision or '') else '🟢' if 'ACHAT' in (r.decision or '') else '🟡'} "
+                f"*{r.ticker}* ${_f(r.current_price)} "
+                f"— {r.score_global or 'N/D'}/100 | {_stars(r.etoiles)} | {r.conviction}"
                 for r in reports[:8]
             )
             msg = (
@@ -157,6 +167,7 @@ class TelegramNotifier:
                 f"{total} actions · {len(reports)} opportunité(s)\n"
                 f"🟢 {len(buy)} achat · 🟡 {len(watch)} surveiller\n\n"
                 f"{lines}\n\n"
-                f"_Rapport complet envoyé pour chaque titre._"
+                f"_Rapport complet envoyé pour chaque titre._\n"
+                f"_Toutes les données sont réelles — N/D si indisponible._"
             )
         await self._send(msg)
