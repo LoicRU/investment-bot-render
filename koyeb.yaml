@@ -1,0 +1,25 @@
+services:
+  - name: investment-bot
+    type: worker
+    git:
+      repository: github.com/TON_USER/investment-bot
+      branch: main
+    build:
+      buildpack:
+        build_command: pip install -r requirements.txt
+    run:
+      command: python main.py
+    instance_types: free
+    regions:
+      - was
+    env:
+      - key: GROQ_API_KEY
+        secret: true
+      - key: TELEGRAM_TOKEN
+        secret: true
+      - key: TELEGRAM_CHAT_ID
+        secret: true
+      - key: SCAN_MODE
+        value: weekly
+      - key: ALERT_THRESHOLD
+        value: "75"
