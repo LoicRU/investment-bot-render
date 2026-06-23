@@ -1,6 +1,4 @@
 groq>=0.9.0
 yfinance>=0.2.38
-python-telegram-bot>=21.0
-apscheduler>=3.10.4
-requests>=2.31.0
+aiohttp>=3.9.0
 pandas>=2.2.0

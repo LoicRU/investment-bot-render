@@ -1,32 +1,26 @@
 """
-Screener — collecte les données financières via yfinance (gratuit)
-Filtre initial sans IA pour limiter les appels Groq
+Screener — collecte les données via yfinance (gratuit)
 """
 import logging
 import time
 from dataclasses import dataclass
 from typing import Optional
-
 import yfinance as yf
 
 logger = logging.getLogger("screener")
 
-# ----------------------------------------------------------------
-# Univers de tickers surveillés
-# Modifie ces listes pour ajouter tes propres tickers
-# ----------------------------------------------------------------
 WATCHLIST = [
     # IA & Semi-conducteurs
-    "NVDA", "AMD", "CRDO", "SMCI", "AEHR", "WOLF", "ONTO", "ACLS",
+    "NVDA", "AMD", "CRDO", "SMCI", "AEHR", "ONTO", "ACLS",
     # SaaS / Cloud
-    "DDOG", "NET", "ZS", "SNOW", "MDB", "GTLB", "CFLT", "ESTC",
-    "BILL", "GLBE", "TTD", "HUBS", "FRSH", "PATH", "PLTR", "AI",
+    "DDOG", "NET", "ZS", "SNOW", "MDB", "GTLB", "CFLT",
+    "BILL", "GLBE", "TTD", "HUBS", "PATH", "PLTR", "AI",
     # Santé / Biotech
-    "TMDX", "RXRX", "NTLA", "BEAM", "CRSP", "PACB", "ILMN",
-    # Énergie propre / Space
-    "RKLB", "ACHR", "JOBY", "ASTS", "ENVX", "IREN",
+    "TMDX", "RXRX", "NTLA", "BEAM", "CRSP",
+    # Space / Énergie
+    "RKLB", "ACHR", "ASTS", "ENVX",
     # Fintech / Consommation
-    "SOFI", "AFRM", "UPST", "HOOD", "COIN", "CELH", "DUOL",
+    "SOFI", "AFRM", "COIN", "CELH", "DUOL",
     # Global
     "MELI", "SE", "SHOP", "TSM",
 ]
@@ -49,7 +43,6 @@ class TickerData:
     ev_ebitda: float = 0.0
     pe_ratio: float = 0.0
     ps_ratio: float = 0.0
-    pb_ratio: float = 0.0
     sector: str = ""
     industry: str = ""
     description: str = ""
@@ -70,22 +63,21 @@ class Screener:
             tk   = yf.Ticker(symbol)
             info = tk.info or {}
 
-            d.company_name    = info.get("longName", symbol)
-            d.market_cap      = info.get("marketCap", 0) or 0
-            d.sector          = info.get("sector", "")
-            d.industry        = info.get("industry", "")
-            d.description     = (info.get("longBusinessSummary") or "")[:300]
-            d.gross_margin    = (info.get("grossMargins") or 0) * 100
-            d.operating_margin= (info.get("operatingMargins") or 0) * 100
-            d.net_margin      = (info.get("profitMargins") or 0) * 100
-            d.roe             = (info.get("returnOnEquity") or 0) * 100
-            d.debt_to_equity  = info.get("debtToEquity") or 0
-            d.current_ratio   = info.get("currentRatio") or 0
-            d.ev_ebitda       = info.get("enterpriseToEbitda") or 0
-            d.pe_ratio        = info.get("trailingPE") or 0
-            d.ps_ratio        = info.get("priceToSalesTrailing12Months") or 0
-            d.pb_ratio        = info.get("priceToBook") or 0
-            d.fcf             = info.get("freeCashflow") or 0
+            d.company_name     = info.get("longName", symbol)
+            d.market_cap       = info.get("marketCap", 0) or 0
+            d.sector           = info.get("sector", "")
+            d.industry         = info.get("industry", "")
+            d.description      = (info.get("longBusinessSummary") or "")[:300]
+            d.gross_margin     = (info.get("grossMargins") or 0) * 100
+            d.operating_margin = (info.get("operatingMargins") or 0) * 100
+            d.net_margin       = (info.get("profitMargins") or 0) * 100
+            d.roe              = (info.get("returnOnEquity") or 0) * 100
+            d.debt_to_equity   = info.get("debtToEquity") or 0
+            d.current_ratio    = info.get("currentRatio") or 0
+            d.ev_ebitda        = info.get("enterpriseToEbitda") or 0
+            d.pe_ratio         = info.get("trailingPE") or 0
+            d.ps_ratio         = info.get("priceToSalesTrailing12Months") or 0
+            d.fcf              = info.get("freeCashflow") or 0
 
             revenue = info.get("totalRevenue") or 0
             if revenue > 0 and d.fcf:
@@ -102,26 +94,19 @@ class Screener:
 
         except Exception as e:
             d.error = str(e)
-            logger.warning(f"Erreur fetch {symbol}: {e}")
+            logger.warning(f"Erreur {symbol}: {e}")
         return d
 
     def passes(self, d: TickerData) -> bool:
-        if d.error:
-            return False
-        if not (self.MIN_MARKET_CAP <= d.market_cap <= self.MAX_MARKET_CAP):
-            return False
-        if d.revenue_growth_yoy < self.MIN_REV_GROWTH:
-            return False
-        if d.gross_margin < self.MIN_GROSS_MARGIN:
-            return False
-        if d.debt_to_equity > self.MAX_DEBT_EQUITY:
-            return False
-        if d.sector in self.EXCLUDED_SECTORS:
-            return False
+        if d.error:                                          return False
+        if not (self.MIN_MARKET_CAP <= d.market_cap <= self.MAX_MARKET_CAP): return False
+        if d.revenue_growth_yoy < self.MIN_REV_GROWTH:      return False
+        if d.gross_margin       < self.MIN_GROSS_MARGIN:    return False
+        if d.debt_to_equity     > self.MAX_DEBT_EQUITY:     return False
+        if d.sector in self.EXCLUDED_SECTORS:               return False
         return True
 
-    def scan(self, tickers: list[str] | None = None, delay: float = 1.2) -> list[TickerData]:
-        tickers = tickers or WATCHLIST
+    def scan(self, tickers: list[str], delay: float = 1.2) -> list[TickerData]:
         results = []
         logger.info(f"Scan de {len(tickers)} tickers...")
         for i, sym in enumerate(tickers, 1):

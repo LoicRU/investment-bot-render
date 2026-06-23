@@ -1,87 +1,104 @@
-# 🤖 Investment Bot IA — Koyeb (Gratuit à vie)
+# 🤖 Investment Bot IA — GitHub Actions (100% Gratuit à vie)
 
-Scan automatique · Groq IA · Alertes Telegram · **0$/mois pour toujours**
-
----
-
-## Coût : 0$ pour toujours
-
-| Service | Plan | Coût |
-|---------|------|------|
-| **Koyeb** | Free Worker (permanent) | 0$ |
-| **Groq API** | Free (14 400 req/jour) | 0$ |
-| **yfinance** | Gratuit | 0$ |
-| **Telegram** | Gratuit | 0$ |
-| **Total** | | **0$/mois** |
+Scan automatique · Groq IA · Alertes Telegram · **0$ pour toujours · Pas de CB**
 
 ---
 
-## Déploiement en 4 étapes (25 min)
+## Pourquoi GitHub Actions ?
 
-### Étape 1 — Clé Groq (5 min)
+- ✅ Gratuit à vie (2000 min/mois, largement suffisant)
+- ✅ Aucune carte bancaire requise
+- ✅ Aucun serveur à gérer
+- ✅ Scan automatique chaque lundi
+- ✅ Lancement manuel en 1 clic depuis GitHub
 
-1. Va sur **[console.groq.com](https://console.groq.com)**
-2. Crée un compte gratuit (email suffit, pas de CB)
-3. **API Keys** → **Create API Key**
+---
+
+## Déploiement en 3 étapes (15 min)
+
+---
+
+### Étape 1 — Clé Groq gratuite (3 min)
+
+1. Va sur https://console.groq.com
+2. Sign up avec ton email (gratuit, pas de CB)
+3. API Keys → Create API Key
 4. Copie la clé : gsk_XXXX...
 
-### Étape 2 — Bot Telegram (5 min)
+---
 
-1. Ouvre Telegram → cherche @BotFather
-2. Tape /newbot → suis les instructions → copie le token
-3. Envoie /start à ton nouveau bot
-4. Ouvre dans ton navigateur :
-   https://api.telegram.org/bot<TON_TOKEN>/getUpdates
-5. Cherche "chat":{"id":XXXXXXX} → copie ce nombre = ton CHAT_ID
+### Étape 2 — Créer le repo GitHub (5 min)
 
-### Étape 3 — Mettre sur GitHub (5 min)
+1. Va sur https://github.com → New repository
+2. Nom : investment-bot (Private recommandé)
+3. Dézippe ce projet dans le dossier, puis dans le terminal :
 
-  git init
-  git add .
-  git commit -m "Investment bot initial"
-  git remote add origin https://github.com/TON_USER/investment-bot.git
-  git push -u origin main
-
-### Étape 4 — Déployer sur Koyeb (10 min)
-
-1. Va sur koyeb.com → Sign up (gratuit, pas de CB)
-2. Clique Create App
-3. Choisis GitHub → connecte ton compte → sélectionne ton repo
-4. Configure :
-   - Service type : Worker  ← IMPORTANT, pas "Web"
-   - Branch : main
-   - Build command : pip install -r requirements.txt
-   - Run command : python main.py
-   - Instance : Free
-5. Variables d'environnement à ajouter :
-   GROQ_API_KEY      = gsk_XXXX...
-   TELEGRAM_TOKEN    = 1234567890:AAFxxx...
-   TELEGRAM_CHAT_ID  = 123456789
-   SCAN_MODE         = weekly
-   ALERT_THRESHOLD   = 75
-6. Clique Deploy ✅
+   git init
+   git add .
+   git commit -m "Investment bot"
+   git remote add origin https://github.com/TON_USER/investment-bot.git
+   git push -u origin main
 
 ---
 
-## Vérifier que ça tourne
+### Étape 3 — Configurer les secrets (7 min)
 
-Koyeb → ton service → Logs :
-  === Investment Bot démarré ===
-  Telegram polling démarré
-  Scheduler démarré
+Dans ton repo GitHub :
+→ Settings → Secrets and variables → Actions → New repository secret
 
-Envoie /start à ton bot Telegram → il doit répondre immédiatement ✅
+Ajoute ces 3 secrets :
+
+   GROQ_API_KEY      →  gsk_XXXX...
+   TELEGRAM_TOKEN    →  ton token Telegram
+   TELEGRAM_CHAT_ID  →  ton chat ID Telegram
+
+Optionnel (variable, pas secret) :
+→ Settings → Secrets and variables → Actions → Variables → New variable
+
+   ALERT_THRESHOLD   →  75
+
+C'est tout ! Le bot est opérationnel. ✅
 
 ---
 
-## Commandes Telegram
+## Vérifier que ça fonctionne
 
-/start        Démarre le bot
-/help         Liste des commandes
-/scan         Lance un scan immédiat
-/top          Top 10 opportunités
-/analyse NVDA Analyse un ticker précis
-/watchlist    Ta liste personnelle
-/ajouter NVDA Ajoute un ticker
-/supprimer    Retire un ticker
-/status       État du bot
+1. Dans ton repo → onglet Actions
+2. Clique sur "Investment Bot Scan"
+3. Clique "Run workflow" → Run workflow
+4. Regarde les logs en temps réel
+5. Tu dois recevoir un message Telegram avec les résultats ✅
+
+---
+
+## Planning automatique
+
+Le bot tourne automatiquement :
+- Chaque lundi à 8h00 UTC (10h00 Paris)
+
+Pour changer le planning, édite .github/workflows/scan.yml :
+  cron: '0 8 * * 1'   ← lundi 8h UTC
+  cron: '0 8 * * 1,4' ← lundi + jeudi
+  cron: '0 8 * * *'   ← tous les jours
+
+---
+
+## Ajouter / modifier des tickers
+
+Édite src/screener.py → liste WATCHLIST :
+
+   WATCHLIST = [
+       "NVDA", "AMD", "TON_TICKER",
+       ...
+   ]
+
+Puis git commit + git push → actif immédiatement.
+
+---
+
+## Consommation GitHub Actions
+
+Chaque scan prend environ 10-15 minutes.
+1 scan/semaine = ~60 min/mois → bien en dessous des 2000 min gratuits.
+
+Même avec 1 scan/jour = ~450 min/mois → toujours gratuit.
