@@ -1,0 +1,6 @@
+anthropic>=0.25.0
+yfinance>=0.2.38
+python-telegram-bot>=21.0
+apscheduler>=3.10.4
+requests>=2.31.0
+pandas>=2.2.0

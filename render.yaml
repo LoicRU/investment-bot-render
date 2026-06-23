@@ -1,0 +1,18 @@
+services:
+  - type: worker
+    name: investment-bot
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: ALERT_THRESHOLD
+        value: "75"
+      - key: SCAN_MODE
+        value: "weekly"
