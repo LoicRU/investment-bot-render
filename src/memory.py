@@ -67,6 +67,20 @@ class Memory:
     def get_ticker_info(self, ticker: str) -> dict:
         return self.data["tickers"].get(ticker, {})
 
+    def mark_invalid(self, ticker: str):
+        """Marque un ticker comme invalide (404, délité) — cooldown 180 jours."""
+        self.data["tickers"][ticker] = {
+            "last_scan":  _today(),
+            "last_score": None,
+            "best_score": 0,
+            "scan_count": self.data["tickers"].get(ticker, {}).get("scan_count", 0) + 1,
+            "status":     "invalid",
+            "decision":   "INVALIDE",
+        }
+        # Retirer de la watchlist si présent
+        if ticker in self.data.get("watchlist", []):
+            self.data["watchlist"].remove(ticker)
+
     def update_ticker(self, ticker: str, score: int, decision: str):
         info = self.data["tickers"].get(ticker, {
             "last_scan": None, "last_score": None,
@@ -110,7 +124,9 @@ class Memory:
         days = _days_since(info["last_scan"])
         status = info.get("status", "unknown")
 
-        if status == "watchlist":
+        if status == "invalid":
+            return days < 180  # 6 mois pour les tickers délités/invalides
+        elif status == "watchlist":
             return days < COOLDOWN_DAYS_WATCHLIST
         elif status == "rejected":
             return days < COOLDOWN_DAYS_REJECTED

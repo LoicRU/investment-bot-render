@@ -41,7 +41,11 @@ async def run_scan(collector, analyzer, memory, notifier, scan_num: int) -> list
         d = collector.collect(sym)
 
         if d.error or not d.current_price:
-            logger.debug(f"  Skip {sym}: {d.error or 'no price'}")
+            if d.error == "INVALID_TICKER":
+                memory.mark_invalid(sym)
+                logger.warning(f"  ✗ {sym} invalide/délité — cooldown 180j")
+            else:
+                logger.debug(f"  Skip {sym}: {d.error or 'no price'}")
             time.sleep(0.4)
             continue
 

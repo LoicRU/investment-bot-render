@@ -110,16 +110,18 @@ class Analyzer:
             m     = re.search(r"\{.*\}", clean, re.DOTALL)
             p     = json.loads(m.group()) if m else {}
 
-            r.etoiles             = p.get("etoiles", 0)
-            r.conviction          = p.get("conviction", "")
-            r.decision            = p.get("decision", "SURVEILLER")
-            r.valeur_intrinseque  = p.get("valeur_intrinseque")
-            r.potentiel_estime    = p.get("potentiel_estime")
-            r.prix_entree_ideal   = p.get("prix_entree_ideal")
-            r.scenario_pessimiste = p.get("scenario_pessimiste", "N/D")
-            r.scenario_moyen      = p.get("scenario_moyen", "N/D")
-            r.scenario_optimiste  = p.get("scenario_optimiste", "N/D")
-            r.synthese            = p.get("synthese", "")
+            # Parsing robuste — valeur par défaut cohérente si champ absent/null
+            etoiles_raw          = p.get("etoiles")
+            r.etoiles            = int(etoiles_raw) if etoiles_raw is not None else _etoiles_from_score(ps.score_global)
+            r.conviction         = p.get("conviction") or _conv(ps.score_global)
+            r.decision           = p.get("decision") or _dec(ps.score_global)
+            r.valeur_intrinseque = p.get("valeur_intrinseque")  # None OK
+            r.potentiel_estime   = p.get("potentiel_estime")    # None OK
+            r.prix_entree_ideal  = p.get("prix_entree_ideal") or "N/D"
+            r.scenario_pessimiste= p.get("scenario_pessimiste") or "N/D"
+            r.scenario_moyen     = p.get("scenario_moyen") or "N/D"
+            r.scenario_optimiste = p.get("scenario_optimiste") or "N/D"
+            r.synthese           = p.get("synthese") or f"Score Python: {ps.score_global}/100."
 
         except Exception as e:
             logger.error(f"Groq error {d.ticker}: {e}")
@@ -136,6 +138,13 @@ def _dec(s):
     if s >= 70: return "ACHETER"
     if s >= 55: return "SURVEILLER"
     return "ÉVITER"
+
+def _etoiles_from_score(s):
+    if s >= 85: return 5
+    if s >= 75: return 4
+    if s >= 65: return 3
+    if s >= 55: return 2
+    return 1
 
 def _conv(s):
     if s >= 80: return "TRÈS FORT"

@@ -16,6 +16,16 @@ import yfinance as yf
 
 logger = logging.getLogger("collector")
 
+
+def _safe_cagr(end, start, years):
+    """CAGR sécurisé — retourne None si calcul impossible (négatif, zéro, None)."""
+    if end is None or start is None or start == 0 or years == 0:
+        return None
+    ratio = end / start
+    if ratio <= 0:
+        return None  # Impossible avec valeurs négatives → pas de résultat inventé
+    return round((ratio ** (1 / years) - 1) * 100, 2)
+
 SEC_HEADERS = {"User-Agent": "InvestmentBot research@bot.com"}  # requis par SEC EDGAR
 SEC_BASE    = "https://data.sec.gov"
 SEC_SEARCH  = "https://efts.sec.gov/LATEST/search-index"
@@ -197,7 +207,7 @@ class DataCollector:
         info = tk.info or {}
 
         if not info.get("longName"):
-            d.error = "Ticker introuvable"
+            d.error = "INVALID_TICKER"
             return
 
         d.company_name       = info.get("longName")
@@ -315,10 +325,10 @@ class DataCollector:
                     d.rev_growth_1y  = round((rev[-1]-rev[-2])/rev[-2]*100,2) if rev[-2]>0 else None
                 if len(rev) >= 4:
                     d.revenue_3y_ago = rev[-4]
-                    d.rev_growth_3y_cagr = round(((rev[-1]/rev[-4])**(1/3)-1)*100,2) if rev[-4]>0 else None
+                    d.rev_growth_3y_cagr = _safe_cagr(rev[-1], rev[-4], 3)
                 if len(rev) >= 6:
                     d.revenue_5y_ago = rev[-6]
-                    d.rev_growth_5y_cagr = round(((rev[-1]/rev[-6])**(1/5)-1)*100,2) if rev[-6]>0 else None
+                    d.rev_growth_5y_cagr = _safe_cagr(rev[-1], rev[-6], 5)
 
                 ni = _row("Net Income")
                 if len(ni) >= 2:
@@ -391,8 +401,7 @@ class DataCollector:
                         d.fcf_growth_1y = round((d.fcf - d.fcf_1y_ago) / abs(d.fcf_1y_ago) * 100, 2)
                 if len(ocf_all)>=4 and len(cap_all)>=4:
                     d.fcf_3y_ago = ocf_all[-4] + cap_all[-4]
-                    if d.fcf and d.fcf_3y_ago and d.fcf_3y_ago > 0:
-                        d.fcf_growth_3y_cagr = round(((d.fcf/d.fcf_3y_ago)**(1/3)-1)*100, 2)
+                    d.fcf_growth_3y_cagr = _safe_cagr(d.fcf, d.fcf_3y_ago, 3)
 
                 # Dilution 3 ans (shares issued cumulées)
                 if "Issuance Of Capital Stock" in cf.index:

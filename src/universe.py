@@ -21,13 +21,11 @@ UNIVERSE = {
     ],
 
     "SAAS_CLOUD": [
-        "GTLB","CFLT","DOCN","MGNI","TBLA","TASK","BRZE","MKTW",
-        "ALKT","ALRM","APPF","APPN","AVPT","BASE","BIGC","BLKB",
-        "BOX","CARG","CCSI","CDAY","CGNT","CLOU","CLPS","CMPR",
+        "GTLB","DOCN","MGNI","TBLA","TASK","BRZE",        "ALKT","ALRM","APPF","APPN","AVPT","BASE","BIGC","BLKB",
+        "BOX","CARG","CCSI","CDAY","CGNT","CLPS","CMPR",
         "CNXC","COUP","CWAN","DCBO","DOMO","DOCU","DV","ENFN",
         "ESTC","EVCM","EVBG","FROG","FTNT","GDRX","GENI","GPRE",
-        "HIMS","HRTH","INFA","INST","JAMF","KALA","LPSN","MDLA",
-        "MNDY","MNTV","NCNO","NTNX","OMCL","OPEN","PAYC","PCTY",
+        "HIMS","HRTH","INFA","INST","JAMF","KALA","LPSN",        "MNDY","MNTV","NCNO","NTNX","OMCL","OPEN","PAYC","PCTY",
         "PING","PLTK","PMVP","PRGS","PSFE","PTON","PWSC","QMCO",
         "RAMP","RNST","RSKD","RXST","SMAR","SNCR","SPOK","SPSC",
         "SPRK","SQSP","STEM","SUMO","TDUP","TENB","TOST","TTGT",
@@ -63,11 +61,11 @@ UNIVERSE = {
         "LCTX","LGND","LKFN","LMNL","LNTH","LRMR","LSAQ","LXRX",
         "LYRA","MBRX","MCVT","MDGL","MDWD","MEIP","MESO","MGTX",
         "MIRM","MNKD","MNMD","MNOV","MNSB","MODN","MOTS","MRNA",
-        "MRSN","MRTX","MRUS","MSRT","MTEM","MTEX","MTTR","NAOV",
+        "MRSN","MRTX","MRUS","MSRT","MTEM","MTEX","NAOV",
         "NBIX","NBTX","NCNA","NEOS","NKGN","NKTR","NLSP","NMIH",
         "NRIX","NSGN","NTGR","NTRA","NUVL","NVAX","NVCR","NVRO",
         "NXGN","NXST","OMER","ONCR","ONCT","ONCY","ONMD","OPCH",
-        "OPTN","OSHA","OVID","OXSQ","PAVM","PCVX","PDFS","PHAT",
+        "OPTN","OVID","OXSQ","PAVM","PCVX","PDFS","PHAT",
         "PHVS","PIXY","PLRX","PMVP","PNTM","POET","PRTK","PRTS",
         "PTGX","PTLO","PTVCA","PVAC","QURE","RARE","RCKT","RCUS",
         "RDUS","RGEN","RIGL","RKTA","RLMD","RMTI","RPRX","RRBI",
@@ -127,7 +125,7 @@ UNIVERSE = {
     ],
 
     "INDUSTRIE_ROBOTIQUE": [
-        "IRBT","NVTS","THNK","BRBS","BRTX","BTCS","BTCY","BTDG",
+        "IRBT","NVTS","BRBS","BRTX","BTCS","BTCY","BTDG",
         "BTEK","BTEL","BTEM","BTEN","BTEQ","BTER","BTES","BTET",
         "BTEX","BTEY","BTEZ","BTFX","BTGC","BTHM","BTIM","BTIO",
         "BTLG","BTMD","BTOS","BTOW","BTRA","BTRW","BTTX","BTTZ",
@@ -141,7 +139,7 @@ UNIVERSE = {
 WATCHLIST_CORE = [
     "NVDA","AMD","CRDO","CELH","RKLB","ASTS","IONQ","DDOG",
     "NET","PLTR","HIMS","SOFI","AFRM","GTLB","RXRX","BEAM",
-    "TMDX","SOUN","BBAI","ENVX","AEHR","WOLF","CFLT","DOCN",
+    "TMDX","SOUN","BBAI","ENVX","AEHR","WOLF","DOCN",
 ]
 
 def get_all_tickers() -> list:
