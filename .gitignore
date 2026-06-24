@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 .DS_Store
 venv/
+# NE PAS ignorer data/memory.json — c'est la mémoire du bot
