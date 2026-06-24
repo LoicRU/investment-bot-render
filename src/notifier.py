@@ -16,16 +16,23 @@ def _stars(n):
     return "★" * n + "☆" * (5 - n)
 
 def _f(v, suf="", dec=1):
+    """Formate un nombre — retourne N/D si None, non-numérique ou erreur."""
     if v is None: return "N/D"
-    if isinstance(v, (int, float)):
-        if abs(v) >= 1e9: return f"{v/1e9:.1f}Md{suf}"
-        if abs(v) >= 1e6: return f"{v/1e6:.1f}M{suf}"
-        return f"{v:.{dec}f}{suf}"
-    return str(v)
+    try:
+        v = float(v)
+    except (TypeError, ValueError):
+        return "N/D"
+    if abs(v) >= 1e9: return f"{v/1e9:.1f}Md{suf}"
+    if abs(v) >= 1e6: return f"{v/1e6:.1f}M{suf}"
+    return f"{v:.{dec}f}{suf}"
 
 def _p(v):
+    """Formate un pourcentage — retourne N/D si None ou non-numérique."""
     if v is None: return "N/D"
-    return f"{v:+.1f}%"
+    try:
+        return f"{float(v):+.1f}%"
+    except (TypeError, ValueError):
+        return "N/D"
 
 DEC = {
     "ACHAT FORT": "🟢🟢",
@@ -59,6 +66,25 @@ class TelegramNotifier:
             return False
 
     async def send_report(self, r, d) -> bool:
+        try:
+            return await self._send_report_safe(r, d)
+        except Exception as e:
+            logger.error(f"Erreur formatage rapport {r.ticker}: {e}")
+            # Envoyer un message minimal pour ne pas perdre l'opportunité
+            try:
+                decision = r.decision or "N/D"
+                conviction = r.conviction or "N/D"
+                msg = (
+                    f"⚠️ *{r.ticker}* — {decision}\n"
+                    f"Score: {r.score_global}/100 | {conviction}\n"
+                    "_Rapport complet indisponible — erreur de formatage_"
+                )
+                await self._send(msg)
+                return True
+            except Exception:
+                return False
+
+    async def _send_report_safe(self, r, d) -> bool:
         dec_e = DEC.get((r.decision or "").upper(), "📊")
 
         # Avertissement qualité données

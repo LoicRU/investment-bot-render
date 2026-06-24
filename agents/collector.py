@@ -26,6 +26,26 @@ def _safe_cagr(end, start, years):
         return None  # Impossible avec valeurs négatives → pas de résultat inventé
     return round((ratio ** (1 / years) - 1) * 100, 2)
 
+
+def _sf(v):
+    """safe_float — convertit en float ou retourne None si impossible."""
+    if v is None:
+        return None
+    try:
+        f = float(v)
+        # Rejeter les valeurs aberrantes que yfinance peut retourner
+        if f != f:  # NaN check
+            return None
+        return f
+    except (TypeError, ValueError):
+        return None
+
+
+def _sfp(v):
+    """safe_float_percent — convertit ratio décimal en % ou None."""
+    f = _sf(v)
+    return round(f * 100, 2) if f is not None else None
+
 SEC_HEADERS = {"User-Agent": "InvestmentBot research@bot.com"}  # requis par SEC EDGAR
 SEC_BASE    = "https://data.sec.gov"
 SEC_SEARCH  = "https://efts.sec.gov/LATEST/search-index"
@@ -218,14 +238,14 @@ class DataCollector:
         d.country            = info.get("country")
 
         # Prix
-        d.current_price      = info.get("currentPrice") or info.get("regularMarketPrice")
-        d.week52_high        = info.get("fiftyTwoWeekHigh")
-        d.week52_low         = info.get("fiftyTwoWeekLow")
-        d.beta               = info.get("beta")
-        d.volume_avg         = info.get("averageVolume")
-        d.market_cap         = info.get("marketCap")
-        d.shares_outstanding = info.get("sharesOutstanding")
-        d.float_shares       = info.get("floatShares")
+        d.current_price      = _sf(info.get("currentPrice") or info.get("regularMarketPrice"))
+        d.week52_high        = _sf(info.get("fiftyTwoWeekHigh"))
+        d.week52_low         = _sf(info.get("fiftyTwoWeekLow"))
+        d.beta               = _sf(info.get("beta"))
+        d.volume_avg         = _sf(info.get("averageVolume"))
+        d.market_cap         = _sf(info.get("marketCap"))
+        d.shares_outstanding = _sf(info.get("sharesOutstanding"))
+        d.float_shares       = _sf(info.get("floatShares"))
 
         # Distance 52S
         if d.current_price and d.week52_low and d.week52_low > 0:
@@ -235,49 +255,50 @@ class DataCollector:
             d.pct_from_52w_high = round((d.week52_high - d.current_price) / d.week52_high * 100, 1)
 
         # Bilan
-        d.cash               = info.get("totalCash")
-        d.total_debt         = info.get("totalDebt")
-        d.current_ratio      = info.get("currentRatio")
-        d.quick_ratio        = info.get("quickRatio")
-        d.book_value_per_share = info.get("bookValue")
+        d.cash               = _sf(info.get("totalCash"))
+        d.total_debt         = _sf(info.get("totalDebt"))
+        d.current_ratio      = _sf(info.get("currentRatio"))
+        d.quick_ratio        = _sf(info.get("quickRatio"))
+        d.book_value_per_share = _sf(info.get("bookValue"))
 
         # P&L
-        d.revenue            = info.get("totalRevenue")
-        d.ebitda             = info.get("ebitda")
-        d.net_income         = info.get("netIncomeToCommon")
-        d.eps_ttm            = info.get("trailingEps")
-        d.gross_margin       = _pct(info.get("grossMargins"))
-        d.operating_margin   = _pct(info.get("operatingMargins"))
-        d.net_margin         = _pct(info.get("profitMargins"))
+        d.revenue            = _sf(info.get("totalRevenue"))
+        d.ebitda             = _sf(info.get("ebitda"))
+        d.net_income         = _sf(info.get("netIncomeToCommon"))
+        d.eps_ttm            = _sf(info.get("trailingEps"))
+        d.gross_margin       = _sfp(info.get("grossMargins"))
+        d.operating_margin   = _sfp(info.get("operatingMargins"))
+        d.net_margin         = _sfp(info.get("profitMargins"))
 
         # Cash flow
-        d.fcf                = info.get("freeCashflow")
-        d.operating_cashflow = info.get("operatingCashflow")
+        d.fcf                = _sf(info.get("freeCashflow"))
+        d.operating_cashflow = _sf(info.get("operatingCashflow"))
         if d.revenue and d.fcf:
             d.fcf_margin     = round(d.fcf / d.revenue * 100, 2)
 
         # Rentabilité
-        d.roe                = _pct(info.get("returnOnEquity"))
-        d.roa                = _pct(info.get("returnOnAssets"))
+        d.roe                = _sfp(info.get("returnOnEquity"))
+        d.roa                = _sfp(info.get("returnOnAssets"))
 
         # Valorisation
-        d.pe_ratio           = info.get("trailingPE")
-        d.pb_ratio           = info.get("priceToBook")
-        d.ps_ratio           = info.get("priceToSalesTrailing12Months")
-        d.ev_ebitda          = info.get("enterpriseToEbitda")
-        d.peg_ratio          = info.get("pegRatio")
-        d.ev_sales           = info.get("enterpriseToRevenue")
+        d.pe_ratio           = _sf(info.get("trailingPE"))
+        d.pb_ratio           = _sf(info.get("priceToBook"))
+        d.ps_ratio           = _sf(info.get("priceToSalesTrailing12Months"))
+        d.ev_ebitda          = _sf(info.get("enterpriseToEbitda"))
+        d.peg_ratio          = _sf(info.get("pegRatio"))
+        d.ev_sales           = _sf(info.get("enterpriseToRevenue"))
 
         # Actionnariat
-        d.insider_ownership  = _pct(info.get("heldPercentInsiders"))
-        d.institutional_ownership = _pct(info.get("heldPercentInstitutions"))
-        d.short_ratio        = info.get("shortRatio")
-        d.short_percent      = _pct(info.get("shortPercentOfFloat"))
+        d.insider_ownership  = _sfp(info.get("heldPercentInsiders"))
+        d.institutional_ownership = _sfp(info.get("heldPercentInstitutions"))
+        d.short_ratio        = _sf(info.get("shortRatio"))
+        d.short_percent      = _sfp(info.get("shortPercentOfFloat"))
+        d.debt_to_equity     = _sf(info.get("debtToEquity"))
 
         # Analystes
-        d.analyst_target     = info.get("targetMeanPrice")
-        d.analyst_target_low = info.get("targetLowPrice")
-        d.analyst_target_high= info.get("targetHighPrice")
+        d.analyst_target     = _sf(info.get("targetMeanPrice"))
+        d.analyst_target_low = _sf(info.get("targetLowPrice"))
+        d.analyst_target_high= _sf(info.get("targetHighPrice"))
         d.analyst_recommendation = info.get("recommendationKey")
         d.nb_analysts        = info.get("numberOfAnalystOpinions")
         if d.analyst_target and d.current_price and d.current_price > 0:
