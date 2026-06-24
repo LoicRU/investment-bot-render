@@ -7,6 +7,10 @@ on:
     - cron: '0 8 * * 5'    # Vendredi 10h Paris
   workflow_dispatch:
 
+# Permission explicite pour écrire dans le repo
+permissions:
+  contents: write
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -42,12 +46,17 @@ jobs:
           MAX_AI_CALLS:      "15"
         run: python main.py
 
-      # Commit la mémoire mise à jour directement dans le repo
       - name: Sauvegarder la mémoire dans Git
         if: always()
         run: |
           git config user.name  "Investment Bot"
           git config user.email "bot@investment.local"
-          git add data/memory.json || true
-          git diff --staged --quiet || git commit -m "🧠 Mise à jour mémoire [skip ci]"
-          git push || true
+          git add data/memory.json
+          # Vérifier que le fichier existe et a changé
+          if git diff --staged --quiet; then
+            echo "Mémoire inchangée — pas de commit nécessaire"
+          else
+            git commit -m "🧠 Mise à jour mémoire [skip ci]"
+            git push origin HEAD:main
+            echo "✅ Mémoire sauvegardée dans Git"
+          fi

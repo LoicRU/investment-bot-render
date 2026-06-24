@@ -8,6 +8,7 @@ Gère :
 """
 import json
 import logging
+import random
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -136,12 +137,12 @@ class Memory:
     # ── Sélection des tickers pour le prochain scan ───────────────
     def select_tickers(self, all_tickers: list, core_watchlist: list, n: int = TICKERS_PER_SCAN) -> list:
         """
-        Sélectionne N tickers pour le prochain scan en prioritisant :
-        1. Core watchlist (toujours incluse)
-        2. Tickers en watchlist dynamique (cooldown court)
-        3. Tickers jamais vus
-        4. Tickers dont le cooldown est expiré (rotation)
-        Exclut les tickers en cooldown actif.
+        Sélectionne N tickers pour le prochain scan.
+        Rotation intelligente pour couvrir le maximum de tickers différents.
+
+        Répartition des slots :
+        - Max 8 slots : core watchlist + watchlist dynamique (mélangées)
+        - Reste : jamais vus en priorité, puis cooldown expiré (tous mélangés)
         """
         selected = []
         seen_set = set()
@@ -151,49 +152,50 @@ class Memory:
                 seen_set.add(t)
                 selected.append(t)
 
-        # Priorité 1 : core watchlist (toujours)
-        for t in core_watchlist:
+        # Pool prioritaire : core watchlist + watchlist dynamique
+        # Limité à 8 slots max pour laisser de la place à la découverte
+        MAX_PRIORITY_SLOTS = min(8, n // 5)
+        priority_pool = list(set(core_watchlist + self.data.get("watchlist", [])))
+        random.shuffle(priority_pool)  # Mélanger pour varier l'ordre
+        for t in priority_pool:
+            if len(selected) >= MAX_PRIORITY_SLOTS:
+                break
             if not self.is_on_cooldown(t):
                 add(t)
 
-        # Priorité 2 : watchlist dynamique (bons scores passés)
-        for t in self.data.get("watchlist", []):
-            if len(selected) >= n: break
-            if not self.is_on_cooldown(t):
-                add(t)
-
-        # Priorité 3 : jamais vus
+        # Slots restants : d'abord jamais vus (mélangés aléatoirement)
         never_seen = [t for t in all_tickers
                       if t not in self.data["tickers"] and t not in seen_set]
-        import random
         random.shuffle(never_seen)
         for t in never_seen:
-            if len(selected) >= n: break
+            if len(selected) >= n:
+                break
             add(t)
 
-        # Priorité 4 : cooldown expiré, pas rejeté
+        # Puis cooldown expiré (hors rejetés récents)
         if len(selected) < n:
-            expired = [
+            available = [
                 t for t in all_tickers
                 if t not in seen_set
                 and not self.is_on_cooldown(t)
-                and self.data["tickers"].get(t, {}).get("status") != "rejected"
+                and self.data["tickers"].get(t, {}).get("status") not in ("rejected", "invalid")
             ]
-            random.shuffle(expired)
-            for t in expired:
-                if len(selected) >= n: break
+            random.shuffle(available)
+            for t in available:
+                if len(selected) >= n:
+                    break
                 add(t)
 
-        # Priorité 5 : si encore de la place, prendre des rejetés anciens
+        # En dernier recours : rejetés anciens (cooldown expiré)
         if len(selected) < n:
             old_rejected = [
                 t for t in all_tickers
-                if t not in seen_set
-                and not self.is_on_cooldown(t)
+                if t not in seen_set and not self.is_on_cooldown(t)
             ]
             random.shuffle(old_rejected)
             for t in old_rejected:
-                if len(selected) >= n: break
+                if len(selected) >= n:
+                    break
                 add(t)
 
         return selected[:n]
