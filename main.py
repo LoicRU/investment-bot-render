@@ -33,25 +33,49 @@ async def run_scan(collector, analyzer, memory, notifier,
     logger.info(f"Scan {scan_num}: {len(tickers)} tickers ({never_seen} jamais vus)")
     logger.info(f"Couverture: {memory.coverage_report(ALL_TICKERS)}")
 
-    # ── Phase 1 : Collecte données réelles ───────────────────────
-    candidates = []
-    for i, sym in enumerate(tickers, 1):
-        logger.info(f"  [{i}/{len(tickers)}] {sym}")
-        d = collector.collect(sym)
+    # ── Phase 1 : Collecte parallèle (5 tickers à la fois) ────────
+    import asyncio as _asyncio
+    from concurrent.futures import ThreadPoolExecutor
 
+    candidates = []
+    invalid_tickers = []
+
+    def collect_one(args):
+        idx, sym = args
+        d = collector.collect(sym)
+        return idx, sym, d
+
+    BATCH_SIZE = 5  # 5 en parallèle — respecte yfinance rate limits
+    all_results = []
+
+    with ThreadPoolExecutor(max_workers=BATCH_SIZE) as pool:
+        futures = list(pool.map(collect_one, enumerate(tickers, 1)))
+        all_results = sorted(futures, key=lambda x: x[0])
+
+    for idx, sym, d in all_results:
+        logger.info(f"  [{idx}/{len(tickers)}] {sym}")
         if d.error or not d.current_price:
             if d.error == "INVALID_TICKER":
-                memory.mark_invalid(sym)
+                invalid_tickers.append(sym)
                 logger.warning(f"  ✗ {sym} invalide/délité — cooldown 180j")
             else:
                 logger.debug(f"  Skip {sym}: {d.error or 'no price'}")
-            time.sleep(0.4)
             continue
 
-        if d.current_price <= 50 and (d.rev_growth_1y or 0) >= 0:
+        # Filtre rapide avec quick_filter
+        from agents.prescorer import quick_filter
+        passes, reason = quick_filter(d)
+        if not passes:
+            logger.debug(f"  Filtré {sym}: {reason}")
+            continue
+
+        if d.current_price <= 50:
             candidates.append(d)
             logger.info(f"  ✓ {sym} ${d.current_price:.2f} CA{_p(d.rev_growth_1y)} q:{d.data_quality_score}/100")
-        time.sleep(1.1)
+
+    # Marquer les invalides en mémoire
+    for sym in invalid_tickers:
+        memory.mark_invalid(sym)
 
     logger.info(f"{len(candidates)} candidats après collecte")
     if not candidates:
@@ -69,7 +93,22 @@ async def run_scan(collector, analyzer, memory, notifier,
     for d, ps in prescores:
         memory.update_ticker(d.ticker, ps.score_global, "PRE_SCORE")
 
-    to_analyze = [(d, ps) for d, ps in prescores if ps.score_global >= THRESHOLD][:MAX_AI_CALLS]
+    # Filtre IA amélioré : skip les losers confirmés par la mémoire
+    to_analyze = []
+    for d, ps in prescores:
+        if ps.score_global < THRESHOLD:
+            continue
+        # Skip si best_score historique très bas ET score actuel pas meilleur
+        mem_info = memory.get_ticker_info(d.ticker)
+        best_hist = mem_info.get("best_score", 0)
+        scan_count = mem_info.get("scan_count", 0)
+        if scan_count >= 3 and best_hist < 40 and ps.score_global < 50:
+            logger.debug(f"  Skip IA {d.ticker}: loser confirmé (best={best_hist}, scans={scan_count})")
+            continue
+        to_analyze.append((d, ps))
+        if len(to_analyze) >= MAX_AI_CALLS:
+            break
+
     logger.info(f"{len(to_analyze)} candidats >= {THRESHOLD}/100 → IA")
 
     if not to_analyze:

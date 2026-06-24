@@ -57,7 +57,11 @@ Global:{g} Croissance:{c} Rentabilité:{r} CF:{cf} Bilan:{b} Mgmt:{m} Valo:{v}
 Alertes: {alertes}
 Qualité données: {dq}/100 | Manquantes: {missing}
 
+Historique bot (scans précédents):
+{history}
+
 Synthèse + décision + scénarios basés sur ces faits uniquement.
+Si historique disponible, commenter l'évolution vs précédent scan.
 JSON: {{"etoiles":0,"conviction":"FORT","decision":"ACHETER","valeur_intrinseque":null,"potentiel_estime":null,"prix_entree_ideal":"$X","scenario_pessimiste":"1 phrase","scenario_moyen":"1 phrase","scenario_optimiste":"1 phrase","synthese":"2-3 phrases honnêtes."}}"""
 
 
@@ -83,6 +87,23 @@ class Analyzer:
             missing_fields=d.missing_fields,
         )
 
+        # Historique des scans précédents
+        mem_info = {}
+        try:
+            from src.memory import Memory
+            mem_info = Memory().get_ticker_info(d.ticker)
+        except Exception:
+            pass
+
+        if mem_info.get("last_score") and mem_info.get("last_scan"):
+            history = (f"Dernier scan: {mem_info['last_scan']} | "
+                      f"Score: {mem_info['last_score']}/100 | "
+                      f"Best score: {mem_info.get('best_score',0)}/100 | "
+                      f"Décision: {mem_info.get('decision','N/D')} | "
+                      f"Nb scans: {mem_info.get('scan_count',0)}")
+        else:
+            history = "Premier scan de ce ticker"
+
         try:
             prompt = USER.format(
                 summary=ps.data_summary,
@@ -93,6 +114,7 @@ class Analyzer:
                 alertes="; ".join(ps.alertes) or "aucune",
                 dq=d.data_quality_score,
                 missing=", ".join(d.missing_fields) or "aucune",
+                history=history,
             )
 
             resp = self.client.chat.completions.create(

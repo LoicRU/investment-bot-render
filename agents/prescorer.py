@@ -7,6 +7,41 @@ from dataclasses import dataclass
 from typing import Optional
 from agents.collector import CompanyData
 
+# ── Filtre rapide niveau 1 (avant prescoring) ────────────────────
+def quick_filter(d: CompanyData) -> tuple[bool, str]:
+    """
+    Filtre strict avant le scoring complet.
+    Retourne (passe, raison_rejet).
+    Élimine les tickers clairement non qualifiés sans gaspiller de tokens IA.
+    """
+    # Volume minimum — évite les illiquides et manipulables
+    if d.volume_avg and d.volume_avg < 200_000:
+        return False, f"volume trop faible ({d.volume_avg:,.0f})"
+
+    # Marge brute minimum — modèle économique viable
+    if d.gross_margin is not None and d.gross_margin < 20:
+        return False, f"marge brute trop faible ({d.gross_margin:.1f}%)"
+
+    # Croissance CA minimum — pas de sociétés en déclin
+    if d.rev_growth_1y is not None and d.rev_growth_1y < -20:
+        return False, f"CA en chute libre ({d.rev_growth_1y:.1f}%)"
+
+    # Cash minimum — société viable (>3 mois de trésorerie)
+    if d.cash_burn_months is not None and d.cash_burn_months < 3:
+        return False, f"cash runway critique ({d.cash_burn_months:.1f} mois)"
+
+    # Momentum : ne pas acheter ce qui chute fortement SANS raison
+    # Exception : near 52W low avec insiders qui achètent = setup valable
+    if (d.perf_3m is not None and d.perf_3m < -40
+            and d.insider_net_signal not in ("positif", "très positif")):
+        return False, f"chute momentum (-{abs(d.perf_3m):.0f}% sur 3M sans signal insider)"
+
+    # Dilution excessive — destructeur de valeur
+    if d.dilution_3y is not None and d.dilution_3y > 30:
+        return False, f"dilution excessive ({d.dilution_3y:.1f}% sur 3 ans)"
+
+    return True, "OK"
+
 
 @dataclass
 class PreScore:
@@ -122,11 +157,32 @@ def score(d: CompanyData) -> PreScore:
     elif eq < 0.5 and eq > 0:
         alertes.append("⚠️ Qualité bénéfices suspecte (FCF << NI)")
 
-    # Rule of 40
+    # Métriques adaptées au secteur
+    sector = (d.sector or "").lower()
+    is_saas      = any(w in sector for w in ["technology", "software", "internet"])
+    is_biotech    = any(w in sector for w in ["healthcare", "biotechnology", "pharmaceutical"])
+    is_industrial = any(w in sector for w in ["industrial", "manufacturing", "energy"])
+
     r40 = d.rule_of_40 or 0
-    if   r40 >= 60: s_cf += 3; ps.rule_of_40_ok = True
-    elif r40 >= 40: s_cf += 2; ps.rule_of_40_ok = True
-    elif r40 >= 20: s_cf += 1
+    if is_saas:
+        # SaaS : Rule of 40 est la métrique clé
+        if   r40 >= 60: s_cf += 4; ps.rule_of_40_ok = True
+        elif r40 >= 40: s_cf += 2; ps.rule_of_40_ok = True
+        elif r40 >= 20: s_cf += 1
+        elif r40 <  10: s_cf -= 1
+    elif is_biotech:
+        # Biotech : cash runway est la métrique clé (pas de Rule of 40)
+        runway = d.cash_burn_months
+        if   runway and runway > 24: s_cf += 4
+        elif runway and runway > 12: s_cf += 2
+        elif runway and runway > 6:  s_cf += 0
+        elif runway and runway <= 6: s_cf -= 2
+        else:                        s_cf += 1  # FCF positif en biotech = rare, bon signe
+    else:
+        # Autres secteurs : Rule of 40 standard
+        if   r40 >= 60: s_cf += 3; ps.rule_of_40_ok = True
+        elif r40 >= 40: s_cf += 2; ps.rule_of_40_ok = True
+        elif r40 >= 20: s_cf += 1
 
     ps.score_cashflow = _clamp(s_cf * 5)
 
@@ -173,6 +229,19 @@ def score(d: CompanyData) -> PreScore:
     if   ins_own >= 10: s_mgmt += 2
     elif ins_own >= 5:  s_mgmt += 1
 
+    # Signal composite : insiders + short interest = squeeze potential
+    short_pct = d.short_percent or 0
+    if (d.insider_net_signal in ("positif", "très positif")
+            and short_pct >= 15
+            and (d.perf_1m or 0) > 0):
+        # Setup squeeze : insiders achètent + fort short interest + momentum positif
+        s_mgmt += 3
+        alertes.append("🎯 Setup squeeze potentiel (insiders+short+momentum)")
+    elif short_pct >= 30:
+        # Short interest très élevé sans signal positif = danger
+        alertes.append(f"⚠️ Short interest très élevé ({short_pct:.0f}%)")
+        s_mgmt -= 1
+
     # SEC à jour ?
     if d.sec_10q_date:
         from datetime import datetime
@@ -189,8 +258,19 @@ def score(d: CompanyData) -> PreScore:
 
     ps.score_management = _clamp(s_mgmt * 10)
 
-    # ── 6. VALORISATION (10 pts) ─────────────────────────────────
+    # ── 6. VALORISATION + MOMENTUM (10 pts) ─────────────────────
     s_val = 5  # base neutre
+
+    # ── Bonus/malus momentum réel des prix ────────────────────────
+    # Un bon titre doit confirmer sa qualité par le prix
+    p3m = d.perf_3m or 0
+    p1m = d.perf_1m or 0
+    if   p3m >= 30:  s_val += 2   # Forte accélération
+    elif p3m >= 10:  s_val += 1   # Momentum positif
+    elif p3m <= -30: s_val -= 2   # Chute forte
+    elif p3m <= -15: s_val -= 1   # Tendance baissière
+    # Momentum court terme (1 mois) confirme ?
+    if p1m > 0 and p3m > 0: s_val += 1   # Double confirmation
 
     # PEG
     peg = d.peg_ratio or 0
