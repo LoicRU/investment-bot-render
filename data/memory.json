@@ -111,13 +111,109 @@
       "scan_count": 1,
       "status": "rejected",
       "decision": "PRE_SCORE"
+    },
+    "BTEM": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OHPA": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "HGEN": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "XLRN": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "ICAD": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "TPIC": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "VRNA": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "AUPH": {
+      "last_scan": "2026-06-24",
+      "last_score": 63,
+      "best_score": 63,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
+    },
+    "NTNX": {
+      "last_scan": "2026-06-24",
+      "last_score": 62,
+      "best_score": 62,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "SURVEILLER"
+    },
+    "SOFI": {
+      "last_scan": "2026-06-24",
+      "last_score": 55,
+      "best_score": 55,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "SURVEILLER"
+    },
+    "CRVW": {
+      "last_scan": "2026-06-24",
+      "last_score": 45,
+      "best_score": 45,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "YEXT": {
+      "last_scan": "2026-06-24",
+      "last_score": 31,
+      "best_score": 31,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
     "CELH"
   ],
   "stats": {
-    "total_scans": 2,
+    "total_scans": 3,
     "total_tickers_seen": 1,
     "opportunities_found": 2,
     "created": "2026-06-23"

@@ -2,37 +2,20 @@
   "recommendations": {
     "SOFI_2026-06-24": {
       "ticker": "SOFI",
-      "date": "2025-12-24",
-      "decision": "ACHETER",
+      "date": "2026-06-24",
+      "decision": "SURVEILLER",
       "price_in": 17.29,
-      "score": 60,
+      "score": 55,
       "scores": {
-        "croissance": 50,
-        "rentabilite": 60,
-        "cashflow": 55,
-        "bilan": 70,
-        "management": 65,
-        "valorisation": 60
+        "croissance": 95,
+        "rentabilite": 40,
+        "cashflow": 10,
+        "bilan": 10,
+        "management": 60,
+        "valorisation": 100
       },
-      "checks": {
-        "30": {
-          "price": 19.0,
-          "change": 9.8,
-          "date": "2026-03-24"
-        },
-        "60": {
-          "price": 21.5,
-          "change": 24.3,
-          "date": "2026-04-24"
-        },
-        "90": {
-          "price": 22.0,
-          "change": 27.1,
-          "date": "2026-05-24"
-        }
-      },
-      "outcome": "win",
-      "outcome_final": "verified_final"
+      "checks": {},
+      "outcome": null
     },
     "CWAN_2026-06-24": {
       "ticker": "CWAN",
@@ -47,6 +30,40 @@
         "bilan": 30,
         "management": 60,
         "valorisation": 60
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "AUPH_2026-06-24": {
+      "ticker": "AUPH",
+      "date": "2026-06-24",
+      "decision": "ACHETER",
+      "price_in": 17.88,
+      "score": 63,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 75,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 70,
+        "valorisation": 70
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "NTNX_2026-06-24": {
+      "ticker": "NTNX",
+      "date": "2026-06-24",
+      "decision": "SURVEILLER",
+      "price_in": 47.89,
+      "score": 62,
+      "scores": {
+        "croissance": 35,
+        "rentabilite": 55,
+        "cashflow": 70,
+        "bilan": 90,
+        "management": 50,
+        "valorisation": 100
       },
       "checks": {},
       "outcome": null
@@ -69,12 +86,29 @@
       "change_60": 24.3,
       "change_90": 27.1,
       "outcome": "win"
+    },
+    {
+      "ticker": "SOFI",
+      "decision": "ACHETER",
+      "score": 60,
+      "scores": {
+        "croissance": 50,
+        "rentabilite": 60,
+        "cashflow": 55,
+        "bilan": 70,
+        "management": 65,
+        "valorisation": 60
+      },
+      "change_30": 9.8,
+      "change_60": 24.3,
+      "change_90": 27.1,
+      "outcome": "win"
     }
   ],
   "stats": {
-    "total_recommendations": 2,
-    "verified": 1,
-    "wins": 1,
+    "total_recommendations": 5,
+    "verified": 2,
+    "wins": 2,
     "losses": 0,
     "neutral": 0
   }
