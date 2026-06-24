@@ -9,7 +9,7 @@ Gère :
 import json
 import logging
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 logger = logging.getLogger("memory")
@@ -22,13 +22,13 @@ TICKERS_PER_SCAN         = 40   # tickers analysés par scan
 
 
 def _today() -> str:
-    return datetime.utcnow().strftime("%Y-%m-%d")
+    return datetime.now(timezone.utc).replace(tzinfo=None).strftime("%Y-%m-%d")
 
 
 def _days_since(date_str: str) -> int:
     try:
         dt = datetime.strptime(date_str, "%Y-%m-%d")
-        return (datetime.utcnow() - dt).days
+        return (datetime.now(timezone.utc).replace(tzinfo=None) - dt).days
     except Exception:
         return 999
 

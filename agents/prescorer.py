@@ -251,7 +251,7 @@ def score(d: CompanyData) -> PreScore:
         return f"{v:+.1f}%" if v is not None else "N/D"
 
     ps.data_summary = (
-        f"{d.ticker}|{d.company_name}|{d.sector}|${d.current_price:.2f}|"
+        f"{d.ticker}|{d.company_name or 'N/D'}|{d.sector or 'N/D'}|${_n(d.current_price)}|"
         f"Cap:{_n(d.market_cap,'$')}|"
         f"CA:{_n(d.revenue,'$')} {_pp(d.rev_growth_1y)}YoY {_pp(d.rev_growth_3y_cagr)}CAGR3Y|"
         f"MB:{_pp(d.gross_margin)}(exp:{_pp(d.gross_margin_expansion)})|"
@@ -260,7 +260,7 @@ def score(d: CompanyData) -> PreScore:
         f"D/E:{_n(d.debt_to_equity)}|NetCash:{_n(d.net_cash_position,'$')}|"
         f"Dil3Y:{_pp(d.dilution_3y)}|"
         f"PE:{_n(d.pe_ratio,'x')}|PS:{_n(d.ps_ratio,'x')}|PEG:{_n(d.peg_ratio)}|"
-        f"Ins:{d.insider_net_signal}({d.recent_insider_buys}B/{d.recent_insider_sells}S)|"
+        f"Ins:{d.insider_net_signal or 'N/D'}({d.recent_insider_buys}B/{d.recent_insider_sells}S)|"
         f"InsOwn:{_pp(d.insider_ownership)}|"
         f"52W:+{_pp(d.pct_from_52w_low)}low|-{_pp(d.pct_from_52w_high)}high|"
         f"Target:{_n(d.analyst_target,'$')}(+{_pp(d.upside_vs_target)})|"
