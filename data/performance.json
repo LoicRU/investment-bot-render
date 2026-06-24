@@ -67,6 +67,57 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CARG_2026-06-24": {
+      "ticker": "CARG",
+      "date": "2026-06-24",
+      "decision": "ACHETER",
+      "price_in": 30.44,
+      "score": 63,
+      "scores": {
+        "croissance": 60,
+        "rentabilite": 75,
+        "cashflow": 55,
+        "bilan": 20,
+        "management": 50,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "OPRA_2026-06-24": {
+      "ticker": "OPRA",
+      "date": "2026-06-24",
+      "decision": "SURVEILLER",
+      "price_in": 18.28,
+      "score": 60,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 30,
+        "cashflow": 50,
+        "bilan": 70,
+        "management": 60,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "ARQT_2026-06-24": {
+      "ticker": "ARQT",
+      "date": "2026-06-24",
+      "decision": "SURVEILLER",
+      "price_in": 26.27,
+      "score": 57,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 15,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -106,7 +157,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 5,
+    "total_recommendations": 8,
     "verified": 2,
     "wins": 2,
     "losses": 0,
