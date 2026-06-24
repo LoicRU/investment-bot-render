@@ -1,0 +1,78 @@
+{
+  "weights": {
+    "croissance": 0.25,
+    "rentabilite": 0.2,
+    "cashflow": 0.2,
+    "bilan": 0.1,
+    "management": 0.1,
+    "valorisation": 0.15
+  },
+  "feature_stats": {
+    "croissance": {
+      "avg_score_wins": 67.5,
+      "avg_score_losses": 62.5,
+      "win_rate_if_high": null,
+      "n_wins": 4,
+      "n_losses": 6
+    },
+    "rentabilite": {
+      "avg_score_wins": 62.5,
+      "avg_score_losses": 57.5,
+      "win_rate_if_high": null,
+      "n_wins": 4,
+      "n_losses": 6
+    },
+    "cashflow": {
+      "avg_score_wins": 57.5,
+      "avg_score_losses": 52.5,
+      "win_rate_if_high": null,
+      "n_wins": 4,
+      "n_losses": 6
+    },
+    "bilan": {
+      "avg_score_wins": 70.0,
+      "avg_score_losses": 70.0,
+      "win_rate_if_high": 40.0,
+      "n_wins": 4,
+      "n_losses": 6
+    },
+    "management": {
+      "avg_score_wins": 65.0,
+      "avg_score_losses": 65.0,
+      "win_rate_if_high": null,
+      "n_wins": 4,
+      "n_losses": 6
+    },
+    "valorisation": {
+      "avg_score_wins": 60.0,
+      "avg_score_losses": 60.0,
+      "win_rate_if_high": null,
+      "n_wins": 4,
+      "n_losses": 6
+    }
+  },
+  "sector_stats": {},
+  "score_buckets": {
+    "55-64": {
+      "win_rate": null,
+      "n": 0
+    },
+    "65-74": {
+      "win_rate": 0.0,
+      "avg_change_90j": -5.0,
+      "n": 5
+    },
+    "75-84": {
+      "win_rate": 80.0,
+      "avg_change_90j": 11.0,
+      "n": 5
+    },
+    "85+": {
+      "win_rate": null,
+      "n": 0
+    }
+  },
+  "last_update": "2026-06-24",
+  "samples_used": 10,
+  "confidence": "low"
+}

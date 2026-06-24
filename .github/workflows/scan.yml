@@ -2,12 +2,11 @@ name: Investment Bot Scan
 
 on:
   schedule:
-    - cron: '0 8 * * 1'    # Lundi 10h Paris
-    - cron: '0 8 * * 3'    # Mercredi 10h Paris
-    - cron: '0 8 * * 5'    # Vendredi 10h Paris
+    - cron: '0 8 * * 1'
+    - cron: '0 8 * * 3'
+    - cron: '0 8 * * 5'
   workflow_dispatch:
 
-# Permission explicite pour écrire dans le repo
 permissions:
   contents: write
 
@@ -46,17 +45,17 @@ jobs:
           MAX_AI_CALLS:      "15"
         run: python main.py
 
-      - name: Sauvegarder la mémoire dans Git
+      - name: Sauvegarder mémoire + apprentissage dans Git
         if: always()
         run: |
           git config user.name  "Investment Bot"
           git config user.email "bot@investment.local"
-          git add data/memory.json
-          # Vérifier que le fichier existe et a changé
+          git add data/memory.json data/performance.json data/patterns.json 2>/dev/null || true
           if git diff --staged --quiet; then
-            echo "Mémoire inchangée — pas de commit nécessaire"
+            echo "Données inchangées — pas de commit"
           else
-            git commit -m "🧠 Mise à jour mémoire [skip ci]"
+            git commit -m "🧠 Mise à jour mémoire + apprentissage [skip ci]"
+            git pull --rebase origin main
             git push origin HEAD:main
-            echo "✅ Mémoire sauvegardée dans Git"
+            echo "✅ Données sauvegardées"
           fi

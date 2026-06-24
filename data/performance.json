@@ -1,0 +1,45 @@
+{
+  "recommendations": {
+    "SOFI_2026-06-24": {
+      "ticker": "SOFI",
+      "date": "2025-12-24",
+      "decision": "ACHETER",
+      "price_in": 17.29,
+      "score": 60,
+      "scores": {
+        "croissance": 50,
+        "rentabilite": 60,
+        "cashflow": 55,
+        "bilan": 70,
+        "management": 65,
+        "valorisation": 60
+      },
+      "checks": {
+        "30": {
+          "price": 19.0,
+          "change": 9.8,
+          "date": "2026-03-24"
+        },
+        "60": {
+          "price": 21.5,
+          "change": 24.3,
+          "date": "2026-04-24"
+        },
+        "90": {
+          "price": 22.0,
+          "change": 27.1,
+          "date": "2026-05-24"
+        }
+      },
+      "outcome": null
+    }
+  },
+  "outcomes": [],
+  "stats": {
+    "total_recommendations": 1,
+    "verified": 0,
+    "wins": 0,
+    "losses": 0,
+    "neutral": 0
+  }
+}

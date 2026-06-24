@@ -223,14 +223,21 @@ def score(d: CompanyData) -> PreScore:
     ps.score_qualite_data = d.data_quality_score
 
     # ── SCORE GLOBAL PONDÉRÉ ─────────────────────────────────────
-    # Poids : Croissance 25% + Rentabilité 20% + CF 20% + Bilan 10% + Mgmt 10% + Valo 15%
+    # Poids dynamiques — ajustés par apprentissage si disponible
+    try:
+        from src.learner import PatternLearner
+        w = PatternLearner().get_weights()
+    except Exception:
+        w = {"croissance":0.25,"rentabilite":0.20,"cashflow":0.20,
+             "bilan":0.10,"management":0.10,"valorisation":0.15}
+
     ps.score_global = _clamp(
-        ps.score_croissance   * 0.25 +
-        ps.score_rentabilite  * 0.20 +
-        ps.score_cashflow     * 0.20 +
-        ps.score_bilan        * 0.10 +
-        ps.score_management   * 0.10 +
-        ps.score_valorisation * 0.15
+        ps.score_croissance   * w.get("croissance",   0.25) +
+        ps.score_rentabilite  * w.get("rentabilite",  0.20) +
+        ps.score_cashflow     * w.get("cashflow",     0.20) +
+        ps.score_bilan        * w.get("bilan",        0.10) +
+        ps.score_management   * w.get("management",   0.10) +
+        ps.score_valorisation * w.get("valorisation", 0.15)
     )
 
     # Pénalité données insuffisantes
