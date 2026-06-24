@@ -67,6 +67,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "SATL_2026-06-24": {
+      "ticker": "SATL",
+      "date": "2026-06-24",
+      "decision": "ACHETER",
+      "price_in": 5.235,
+      "score": 58,
+      "scores": {
+        "croissance": 90,
+        "rentabilite": 40,
+        "cashflow": 0,
+        "bilan": 60,
+        "management": 70,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "UPWK_2026-06-24": {
+      "ticker": "UPWK",
+      "date": "2026-06-24",
+      "decision": "ACHETER",
+      "price_in": 8.385,
+      "score": 55,
+      "scores": {
+        "croissance": 25,
+        "rentabilite": 60,
+        "cashflow": 65,
+        "bilan": 30,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -106,7 +140,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 5,
+    "total_recommendations": 7,
     "verified": 2,
     "wins": 2,
     "losses": 0,
