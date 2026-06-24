@@ -7,11 +7,117 @@
       "scan_count": 1,
       "status": "watchlist",
       "decision": "ACHETER"
+    },
+    "AMRK": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "RXMD": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "EXAI": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SILK": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OSPT": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CREV": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "INST": {
+      "last_scan": "2026-06-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CWAN": {
+      "last_scan": "2026-06-24",
+      "last_score": 55,
+      "best_score": 55,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "SURVEILLER"
+    },
+    "APPN": {
+      "last_scan": "2026-06-24",
+      "last_score": 53,
+      "best_score": 53,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "ENVX": {
+      "last_scan": "2026-06-24",
+      "last_score": 51,
+      "best_score": 51,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "BLFS": {
+      "last_scan": "2026-06-24",
+      "last_score": 50,
+      "best_score": 50,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "TDUP": {
+      "last_scan": "2026-06-24",
+      "last_score": 44,
+      "best_score": 44,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "TBLA": {
+      "last_scan": "2026-06-24",
+      "last_score": 31,
+      "best_score": 31,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
-  "watchlist": ["CELH"],
+  "watchlist": [
+    "CELH"
+  ],
   "stats": {
-    "total_scans": 1,
+    "total_scans": 2,
     "total_tickers_seen": 1,
     "opportunities_found": 1,
     "created": "2026-06-23"

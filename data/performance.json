@@ -31,14 +31,50 @@
           "date": "2026-05-24"
         }
       },
+      "outcome": "win",
+      "outcome_final": "verified_final"
+    },
+    "CWAN_2026-06-24": {
+      "ticker": "CWAN",
+      "date": "2026-06-24",
+      "decision": "SURVEILLER",
+      "price_in": 24.55,
+      "score": 55,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 15,
+        "cashflow": 45,
+        "bilan": 30,
+        "management": 60,
+        "valorisation": 60
+      },
+      "checks": {},
       "outcome": null
     }
   },
-  "outcomes": [],
+  "outcomes": [
+    {
+      "ticker": "SOFI",
+      "decision": "ACHETER",
+      "score": 60,
+      "scores": {
+        "croissance": 50,
+        "rentabilite": 60,
+        "cashflow": 55,
+        "bilan": 70,
+        "management": 65,
+        "valorisation": 60
+      },
+      "change_30": 9.8,
+      "change_60": 24.3,
+      "change_90": 27.1,
+      "outcome": "win"
+    }
+  ],
   "stats": {
-    "total_recommendations": 1,
-    "verified": 0,
-    "wins": 0,
+    "total_recommendations": 2,
+    "verified": 1,
+    "wins": 1,
     "losses": 0,
     "neutral": 0
   }
