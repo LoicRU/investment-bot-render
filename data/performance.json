@@ -101,6 +101,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "OPRA_2026-06-25": {
+      "ticker": "OPRA",
+      "date": "2026-06-25",
+      "decision": "ACHETER",
+      "price_in": 18.29,
+      "score": 60,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 30,
+        "cashflow": 50,
+        "bilan": 70,
+        "management": 60,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "GTLB_2026-06-25": {
+      "ticker": "GTLB",
+      "date": "2026-06-25",
+      "decision": "ACHETER",
+      "price_in": 28.27,
+      "score": 57,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 25,
+        "cashflow": 45,
+        "bilan": 80,
+        "management": 60,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -140,7 +174,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 7,
+    "total_recommendations": 9,
     "verified": 2,
     "wins": 2,
     "losses": 0,

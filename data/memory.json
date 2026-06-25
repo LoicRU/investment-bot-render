@@ -319,13 +319,109 @@
       "scan_count": 1,
       "status": "rejected",
       "decision": "PRE_SCORE"
+    },
+    "DMTK": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "BTIO": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "ZAFG": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "MTEM": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SAGE": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "AVEO": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "COUP": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "GRVI": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "ARNA": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "PSEM": {
+      "last_scan": "2026-06-25",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OPRA": {
+      "last_scan": "2026-06-25",
+      "last_score": 60,
+      "best_score": 60,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
+    },
+    "GTLB": {
+      "last_scan": "2026-06-25",
+      "last_score": 57,
+      "best_score": 57,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
     }
   },
   "watchlist": [
     "CELH"
   ],
   "stats": {
-    "total_scans": 4,
+    "total_scans": 5,
     "total_tickers_seen": 1,
     "opportunities_found": 2,
     "created": "2026-06-23"
