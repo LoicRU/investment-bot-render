@@ -415,15 +415,160 @@
       "scan_count": 2,
       "status": "interesting",
       "decision": "ACHETER"
+    },
+    "TYME": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OPSM": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "RKTA": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SUMO": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SQSP": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "MAXR": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "ZEAL": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "MNMD": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CRXT": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "DVAX": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OSAT": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "MEIP": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "RDUS": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "KDNY": {
+      "last_scan": "2026-06-26",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "RIGL": {
+      "last_scan": "2026-06-26",
+      "last_score": 74,
+      "best_score": 74,
+      "scan_count": 2,
+      "status": "watchlist",
+      "decision": "ACHETER"
+    },
+    "GENI": {
+      "last_scan": "2026-06-26",
+      "last_score": 57,
+      "best_score": 57,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
+    },
+    "BRZE": {
+      "last_scan": "2026-06-26",
+      "last_score": 54,
+      "best_score": 54,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "BKSY": {
+      "last_scan": "2026-06-26",
+      "last_score": 25,
+      "best_score": 25,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
-    "CELH"
+    "CELH",
+    "RIGL"
   ],
   "stats": {
-    "total_scans": 5,
+    "total_scans": 6,
     "total_tickers_seen": 1,
-    "opportunities_found": 2,
+    "opportunities_found": 3,
     "created": "2026-06-23"
   }
 }
