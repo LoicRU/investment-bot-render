@@ -169,6 +169,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "TBPH_2026-06-29": {
+      "ticker": "TBPH",
+      "date": "2026-06-29",
+      "decision": "ACHETER",
+      "price_in": 17.63,
+      "score": 61,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 35,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 70
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "OPRT_2026-06-29": {
+      "ticker": "OPRT",
+      "date": "2026-06-29",
+      "decision": "ACHETER",
+      "price_in": 5.75,
+      "score": 56,
+      "scores": {
+        "croissance": 95,
+        "rentabilite": 30,
+        "cashflow": 10,
+        "bilan": 30,
+        "management": 70,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -208,7 +242,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 11,
+    "total_recommendations": 13,
     "verified": 2,
     "wins": 2,
     "losses": 0,
