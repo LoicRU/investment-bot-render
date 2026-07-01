@@ -203,6 +203,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "ETON_2026-07-01": {
+      "ticker": "ETON",
+      "date": "2026-07-01",
+      "decision": "ACHETER",
+      "price_in": 36.2,
+      "score": 55,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 15,
+        "bilan": 10,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -242,7 +259,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 13,
+    "total_recommendations": 14,
     "verified": 2,
     "wins": 2,
     "losses": 0,
