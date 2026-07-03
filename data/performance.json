@@ -220,6 +220,57 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "TOST_2026-07-03": {
+      "ticker": "TOST",
+      "date": "2026-07-03",
+      "decision": "ACHETER",
+      "price_in": 28.82,
+      "score": 61,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 30,
+        "cashflow": 40,
+        "bilan": 80,
+        "management": 70,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "ALKT_2026-07-03": {
+      "ticker": "ALKT",
+      "date": "2026-07-03",
+      "decision": "ACHETER",
+      "price_in": 19.02,
+      "score": 58,
+      "scores": {
+        "croissance": 90,
+        "rentabilite": 20,
+        "cashflow": 35,
+        "bilan": 30,
+        "management": 80,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "IONQ_2026-07-03": {
+      "ticker": "IONQ",
+      "date": "2026-07-03",
+      "decision": "ACHETER",
+      "price_in": 49.12,
+      "score": 55,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 5,
+        "cashflow": 20,
+        "bilan": 60,
+        "management": 60,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -259,7 +310,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 14,
+    "total_recommendations": 17,
     "verified": 2,
     "wins": 2,
     "losses": 0,
