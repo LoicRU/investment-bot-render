@@ -271,6 +271,57 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-07-06": {
+      "ticker": "CELH",
+      "date": "2026-07-06",
+      "decision": "ACHETER",
+      "price_in": 33.16,
+      "score": 70,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 50,
+        "cashflow": 50,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "IBRX_2026-07-06": {
+      "ticker": "IBRX",
+      "date": "2026-07-06",
+      "decision": "ATTENDRE",
+      "price_in": 9.44,
+      "score": 62,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 10,
+        "bilan": 80,
+        "management": 70,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "MNKD_2026-07-06": {
+      "ticker": "MNKD",
+      "date": "2026-07-06",
+      "decision": "ACHETER",
+      "price_in": 4.52,
+      "score": 57,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 40,
+        "cashflow": 30,
+        "bilan": 70,
+        "management": 50,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -310,7 +361,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 17,
+    "total_recommendations": 20,
     "verified": 2,
     "wins": 2,
     "losses": 0,
