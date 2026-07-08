@@ -322,6 +322,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "RIGL_2026-07-08": {
+      "ticker": "RIGL",
+      "date": "2026-07-08",
+      "decision": "ACHETER",
+      "price_in": 42.56,
+      "score": 74,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "AVPT_2026-07-08": {
+      "ticker": "AVPT",
+      "date": "2026-07-08",
+      "decision": "ACHETER",
+      "price_in": 12.51,
+      "score": 68,
+      "scores": {
+        "croissance": 75,
+        "rentabilite": 45,
+        "cashflow": 70,
+        "bilan": 50,
+        "management": 80,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -361,7 +395,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 20,
+    "total_recommendations": 22,
     "verified": 2,
     "wins": 2,
     "losses": 0,
