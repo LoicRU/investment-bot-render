@@ -356,6 +356,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "STOK_2026-07-10": {
+      "ticker": "STOK",
+      "date": "2026-07-10",
+      "decision": "ACHETER",
+      "price_in": 32.83,
+      "score": 58,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 20,
+        "bilan": 60,
+        "management": 60,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "INVA_2026-07-10": {
+      "ticker": "INVA",
+      "date": "2026-07-10",
+      "decision": "ACHETER",
+      "price_in": 22.2,
+      "score": 56,
+      "scores": {
+        "croissance": 50,
+        "rentabilite": 50,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -395,7 +429,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 22,
+    "total_recommendations": 24,
     "verified": 2,
     "wins": 2,
     "losses": 0,
