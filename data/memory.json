@@ -1,10 +1,10 @@
 {
   "tickers": {
     "CELH": {
-      "last_scan": "2026-07-06",
+      "last_scan": "2026-07-13",
       "last_score": 70,
       "best_score": 75,
-      "scan_count": 3,
+      "scan_count": 5,
       "status": "watchlist",
       "decision": "ACHETER"
     },
@@ -1303,6 +1303,78 @@
       "scan_count": 1,
       "status": "neutral",
       "decision": "PRE_SCORE"
+    },
+    "BTWO": {
+      "last_scan": "2026-07-13",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OMGA": {
+      "last_scan": "2026-07-13",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "NWIN": {
+      "last_scan": "2026-07-13",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OSTK": {
+      "last_scan": "2026-07-13",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "ATAX": {
+      "last_scan": "2026-07-13",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "IMCR": {
+      "last_scan": "2026-07-13",
+      "last_score": 51,
+      "best_score": 51,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "BLKB": {
+      "last_scan": "2026-07-13",
+      "last_score": 42,
+      "best_score": 42,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "CPRI": {
+      "last_scan": "2026-07-13",
+      "last_score": 40,
+      "best_score": 40,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "NTGR": {
+      "last_scan": "2026-07-13",
+      "last_score": 37,
+      "best_score": 37,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
@@ -1310,9 +1382,9 @@
     "RIGL"
   ],
   "stats": {
-    "total_scans": 12,
+    "total_scans": 13,
     "total_tickers_seen": 1,
-    "opportunities_found": 5,
+    "opportunities_found": 6,
     "created": "2026-06-23"
   }
 }

@@ -390,6 +390,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-07-13": {
+      "ticker": "CELH",
+      "date": "2026-07-13",
+      "decision": "ACHETER",
+      "price_in": 30.6,
+      "score": 70,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 50,
+        "cashflow": 50,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -429,7 +446,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 24,
+    "total_recommendations": 25,
     "verified": 2,
     "wins": 2,
     "losses": 0,
