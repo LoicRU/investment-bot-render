@@ -407,6 +407,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "RIGL_2026-07-15": {
+      "ticker": "RIGL",
+      "date": "2026-07-15",
+      "decision": "ACHETER",
+      "price_in": 41.17,
+      "score": 71,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -446,7 +463,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 25,
+    "total_recommendations": 26,
     "verified": 2,
     "wins": 2,
     "losses": 0,

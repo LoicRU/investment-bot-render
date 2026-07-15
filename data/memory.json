@@ -81,10 +81,10 @@
       "decision": "PRE_SCORE"
     },
     "ENVX": {
-      "last_scan": "2026-06-24",
+      "last_scan": "2026-07-15",
       "last_score": 51,
       "best_score": 51,
-      "scan_count": 1,
+      "scan_count": 2,
       "status": "neutral",
       "decision": "PRE_SCORE"
     },
@@ -289,10 +289,10 @@
       "decision": "ACHETER"
     },
     "HIMS": {
-      "last_scan": "2026-06-24",
+      "last_scan": "2026-07-15",
       "last_score": 49,
       "best_score": 49,
-      "scan_count": 1,
+      "scan_count": 2,
       "status": "neutral",
       "decision": "PRE_SCORE"
     },
@@ -529,10 +529,10 @@
       "decision": "INVALIDE"
     },
     "RIGL": {
-      "last_scan": "2026-07-08",
-      "last_score": 74,
+      "last_scan": "2026-07-15",
+      "last_score": 71,
       "best_score": 74,
-      "scan_count": 4,
+      "scan_count": 6,
       "status": "watchlist",
       "decision": "ACHETER"
     },
@@ -1375,6 +1375,166 @@
       "scan_count": 1,
       "status": "rejected",
       "decision": "PRE_SCORE"
+    },
+    "KTRA": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OTNK": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "BGNE": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "JAMF": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "THTX": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "BPMC": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "AUVI": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "AYLA": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "GHDX": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SURF": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "NCNO": {
+      "last_scan": "2026-07-15",
+      "last_score": 50,
+      "best_score": 50,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "OQAL": {
+      "last_scan": "2026-07-15",
+      "last_score": 17,
+      "best_score": 17,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
+    },
+    "BLUE": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "EVBG": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CPTS": {
+      "last_scan": "2026-07-15",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CPRX": {
+      "last_scan": "2026-07-15",
+      "last_score": 53,
+      "best_score": 53,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "TENB": {
+      "last_scan": "2026-07-15",
+      "last_score": 47,
+      "best_score": 47,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "ATRC": {
+      "last_scan": "2026-07-15",
+      "last_score": 41,
+      "best_score": 41,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "AZTA": {
+      "last_scan": "2026-07-15",
+      "last_score": 40,
+      "best_score": 40,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "TDOC": {
+      "last_scan": "2026-07-15",
+      "last_score": 27,
+      "best_score": 27,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
@@ -1382,9 +1542,9 @@
     "RIGL"
   ],
   "stats": {
-    "total_scans": 13,
+    "total_scans": 14,
     "total_tickers_seen": 1,
-    "opportunities_found": 6,
+    "opportunities_found": 7,
     "created": "2026-06-23"
   }
 }
