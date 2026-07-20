@@ -475,6 +475,57 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-07-20": {
+      "ticker": "CELH",
+      "date": "2026-07-20",
+      "decision": "ACHETER",
+      "price_in": 28.99,
+      "score": 70,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 50,
+        "cashflow": 50,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "PRGS_2026-07-20": {
+      "ticker": "PRGS",
+      "date": "2026-07-20",
+      "decision": "ACHETER",
+      "price_in": 40.55,
+      "score": 67,
+      "scores": {
+        "croissance": 85,
+        "rentabilite": 45,
+        "cashflow": 80,
+        "bilan": 0,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "TPVG_2026-07-20": {
+      "ticker": "TPVG",
+      "date": "2026-07-20",
+      "decision": "NEUTRE",
+      "price_in": 4.73,
+      "score": 58,
+      "scores": {
+        "croissance": 60,
+        "rentabilite": 55,
+        "cashflow": 65,
+        "bilan": 0,
+        "management": 60,
+        "valorisation": 90
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -514,7 +565,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 29,
+    "total_recommendations": 32,
     "verified": 2,
     "wins": 2,
     "losses": 0,
