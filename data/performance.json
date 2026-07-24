@@ -14,7 +14,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 16.65,
+          "change": -3.7,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "CWAN_2026-06-24": {
@@ -31,7 +37,13 @@
         "management": 60,
         "valorisation": 60
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 24.56,
+          "change": 0.04,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "AUPH_2026-06-24": {
@@ -48,7 +60,13 @@
         "management": 70,
         "valorisation": 70
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 15.24,
+          "change": -14.77,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "NTNX_2026-06-24": {
@@ -65,7 +83,13 @@
         "management": 50,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 52.63,
+          "change": 9.9,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "SATL_2026-06-24": {
@@ -82,7 +106,13 @@
         "management": 70,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 3.81,
+          "change": -27.22,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "UPWK_2026-06-24": {
@@ -99,7 +129,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 8.72,
+          "change": 4.0,
+          "date": "2026-07-24"
+        }
+      },
       "outcome": null
     },
     "OPRA_2026-06-25": {
@@ -543,6 +579,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "ONDS_2026-07-24": {
+      "ticker": "ONDS",
+      "date": "2026-07-24",
+      "decision": "ACHETER",
+      "price_in": 7.93,
+      "score": 55,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 35,
+        "cashflow": 20,
+        "bilan": 40,
+        "management": 50,
+        "valorisation": 70
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -582,7 +635,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 33,
+    "total_recommendations": 34,
     "verified": 2,
     "wins": 2,
     "losses": 0,
