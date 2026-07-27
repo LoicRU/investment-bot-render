@@ -152,7 +152,13 @@
         "management": 60,
         "valorisation": 90
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 18.48,
+          "change": 1.04,
+          "date": "2026-07-27"
+        }
+      },
       "outcome": null
     },
     "GTLB_2026-06-25": {
@@ -169,7 +175,13 @@
         "management": 60,
         "valorisation": 80
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 31.28,
+          "change": 10.65,
+          "date": "2026-07-27"
+        }
+      },
       "outcome": null
     },
     "RIGL_2026-06-26": {
@@ -186,7 +198,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 36.74,
+          "change": -0.68,
+          "date": "2026-07-27"
+        }
+      },
       "outcome": null
     },
     "GENI_2026-06-26": {
@@ -203,7 +221,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 6.48,
+          "change": 19.12,
+          "date": "2026-07-27"
+        }
+      },
       "outcome": null
     },
     "TBPH_2026-06-29": {
@@ -596,6 +620,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-07-27": {
+      "ticker": "CELH",
+      "date": "2026-07-27",
+      "decision": "ACHETER",
+      "price_in": 27.12,
+      "score": 70,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 50,
+        "cashflow": 50,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -635,7 +676,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 34,
+    "total_recommendations": 35,
     "verified": 2,
     "wins": 2,
     "losses": 0,
