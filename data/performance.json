@@ -244,7 +244,13 @@
         "management": 60,
         "valorisation": 70
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 16.89,
+          "change": -4.2,
+          "date": "2026-07-29"
+        }
+      },
       "outcome": null
     },
     "OPRT_2026-06-29": {
@@ -261,7 +267,13 @@
         "management": 70,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 5.74,
+          "change": -0.17,
+          "date": "2026-07-29"
+        }
+      },
       "outcome": null
     },
     "ETON_2026-07-01": {
@@ -637,6 +649,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "RIGL_2026-07-29": {
+      "ticker": "RIGL",
+      "date": "2026-07-29",
+      "decision": "ACHETER",
+      "price_in": 38.5,
+      "score": 71,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -676,7 +705,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 35,
+    "total_recommendations": 36,
     "verified": 2,
     "wins": 2,
     "losses": 0,

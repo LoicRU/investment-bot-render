@@ -529,10 +529,10 @@
       "decision": "INVALIDE"
     },
     "RIGL": {
-      "last_scan": "2026-07-22",
-      "last_score": 74,
+      "last_scan": "2026-07-29",
+      "last_score": 71,
       "best_score": 74,
-      "scan_count": 8,
+      "scan_count": 10,
       "status": "watchlist",
       "decision": "ACHETER"
     },
@@ -1999,6 +1999,62 @@
       "scan_count": 1,
       "status": "rejected",
       "decision": "PRE_SCORE"
+    },
+    "KNTE": {
+      "last_scan": "2026-07-29",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "TZPS": {
+      "last_scan": "2026-07-29",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SLNO": {
+      "last_scan": "2026-07-29",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CLBS": {
+      "last_scan": "2026-07-29",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "BXMT": {
+      "last_scan": "2026-07-29",
+      "last_score": 39,
+      "best_score": 39,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
+    },
+    "CWEN": {
+      "last_scan": "2026-07-29",
+      "last_score": 39,
+      "best_score": 39,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
+    },
+    "OMCL": {
+      "last_scan": "2026-07-29",
+      "last_score": 38,
+      "best_score": 38,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
@@ -2006,9 +2062,9 @@
     "RIGL"
   ],
   "stats": {
-    "total_scans": 19,
+    "total_scans": 20,
     "total_tickers_seen": 1,
-    "opportunities_found": 10,
+    "opportunities_found": 11,
     "created": "2026-06-23"
   }
 }
