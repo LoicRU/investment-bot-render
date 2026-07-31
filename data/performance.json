@@ -290,7 +290,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 49.03,
+          "change": 35.44,
+          "date": "2026-07-31"
+        }
+      },
       "outcome": null
     },
     "TOST_2026-07-03": {
@@ -666,6 +672,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "UMAC_2026-07-31": {
+      "ticker": "UMAC",
+      "date": "2026-07-31",
+      "decision": "ACHETER",
+      "price_in": 20.51,
+      "score": 60,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 20,
+        "bilan": 40,
+        "management": 70,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -705,7 +728,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 36,
+    "total_recommendations": 37,
     "verified": 2,
     "wins": 2,
     "losses": 0,
