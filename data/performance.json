@@ -313,7 +313,13 @@
         "management": 70,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 32.27,
+          "change": 11.97,
+          "date": "2026-08-03"
+        }
+      },
       "outcome": null
     },
     "ALKT_2026-07-03": {
@@ -330,7 +336,13 @@
         "management": 80,
         "valorisation": 90
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 18.17,
+          "change": -4.47,
+          "date": "2026-08-03"
+        }
+      },
       "outcome": null
     },
     "IONQ_2026-07-03": {
@@ -347,7 +359,13 @@
         "management": 60,
         "valorisation": 90
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 36.44,
+          "change": -25.81,
+          "date": "2026-08-03"
+        }
+      },
       "outcome": null
     },
     "CELH_2026-07-06": {
@@ -689,6 +707,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-08-03": {
+      "ticker": "CELH",
+      "date": "2026-08-03",
+      "decision": "ACHETER",
+      "price_in": 29.21,
+      "score": 70,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 50,
+        "cashflow": 50,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "ZETA_2026-08-03": {
+      "ticker": "ZETA",
+      "date": "2026-08-03",
+      "decision": "ACHETER",
+      "price_in": 21.6,
+      "score": 56,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 35,
+        "cashflow": 35,
+        "bilan": 50,
+        "management": 50,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -728,7 +780,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 37,
+    "total_recommendations": 39,
     "verified": 2,
     "wins": 2,
     "losses": 0,
