@@ -382,7 +382,13 @@
         "management": 80,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 29.54,
+          "change": -10.92,
+          "date": "2026-08-05"
+        }
+      },
       "outcome": null
     },
     "IBRX_2026-07-06": {
@@ -399,7 +405,13 @@
         "management": 70,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 6.95,
+          "change": -26.38,
+          "date": "2026-08-05"
+        }
+      },
       "outcome": null
     },
     "MNKD_2026-07-06": {
@@ -416,7 +428,13 @@
         "management": 50,
         "valorisation": 90
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 3.96,
+          "change": -12.39,
+          "date": "2026-08-05"
+        }
+      },
       "outcome": null
     },
     "RIGL_2026-07-08": {
@@ -741,6 +759,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "RIGL_2026-08-05": {
+      "ticker": "RIGL",
+      "date": "2026-08-05",
+      "decision": "ACHETER",
+      "price_in": 38.7,
+      "score": 74,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 40,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -780,7 +815,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 39,
+    "total_recommendations": 40,
     "verified": 2,
     "wins": 2,
     "losses": 0,
