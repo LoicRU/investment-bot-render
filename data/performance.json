@@ -451,7 +451,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 39.22,
+          "change": -7.85,
+          "date": "2026-08-07"
+        }
+      },
       "outcome": null
     },
     "AVPT_2026-07-08": {
@@ -468,7 +474,13 @@
         "management": 80,
         "valorisation": 90
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 12.79,
+          "change": 2.24,
+          "date": "2026-08-07"
+        }
+      },
       "outcome": null
     },
     "STOK_2026-07-10": {
@@ -776,6 +788,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "XERS_2026-08-07": {
+      "ticker": "XERS",
+      "date": "2026-08-07",
+      "decision": "ACHETER",
+      "price_in": 7.36,
+      "score": 69,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 45,
+        "cashflow": 55,
+        "bilan": 30,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -815,7 +844,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 40,
+    "total_recommendations": 41,
     "verified": 2,
     "wins": 2,
     "losses": 0,
