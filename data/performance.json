@@ -497,7 +497,13 @@
         "management": 60,
         "valorisation": 80
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 32.71,
+          "change": -0.37,
+          "date": "2026-08-10"
+        }
+      },
       "outcome": null
     },
     "INVA_2026-07-10": {
@@ -514,7 +520,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 20.51,
+          "change": -7.61,
+          "date": "2026-08-10"
+        }
+      },
       "outcome": null
     },
     "CELH_2026-07-13": {
@@ -805,6 +817,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "ALGM_2026-08-10": {
+      "ticker": "ALGM",
+      "date": "2026-08-10",
+      "decision": "ACHETER",
+      "price_in": 43.77,
+      "score": 58,
+      "scores": {
+        "croissance": 85,
+        "rentabilite": 30,
+        "cashflow": 55,
+        "bilan": 30,
+        "management": 80,
+        "valorisation": 60
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -844,7 +873,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 41,
+    "total_recommendations": 42,
     "verified": 2,
     "wins": 2,
     "losses": 0,
