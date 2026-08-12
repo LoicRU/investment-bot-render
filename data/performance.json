@@ -543,7 +543,13 @@
         "management": 80,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 28.09,
+          "change": -8.2,
+          "date": "2026-08-12"
+        }
+      },
       "outcome": null
     },
     "RIGL_2026-07-15": {
@@ -834,6 +840,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "UPST_2026-08-12": {
+      "ticker": "UPST",
+      "date": "2026-08-12",
+      "decision": "ACHETER",
+      "price_in": 29.89,
+      "score": 56,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 30,
+        "cashflow": 10,
+        "bilan": 30,
+        "management": 80,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "ARRY_2026-08-12": {
+      "ticker": "ARRY",
+      "date": "2026-08-12",
+      "decision": "ACHETER",
+      "price_in": 5.35,
+      "score": 55,
+      "scores": {
+        "croissance": 95,
+        "rentabilite": 5,
+        "cashflow": 35,
+        "bilan": 30,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -873,7 +913,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 42,
+    "total_recommendations": 44,
     "verified": 2,
     "wins": 2,
     "losses": 0,
