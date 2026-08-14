@@ -566,7 +566,13 @@
         "management": 60,
         "valorisation": 80
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 40.79,
+          "change": -0.92,
+          "date": "2026-08-14"
+        }
+      },
       "outcome": null
     },
     "MGTX_2026-07-17": {
@@ -874,6 +880,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-08-14": {
+      "ticker": "CELH",
+      "date": "2026-08-14",
+      "decision": "ACHETER",
+      "price_in": 28.78,
+      "score": 71,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 40,
+        "cashflow": 65,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "RIGL_2026-08-14": {
+      "ticker": "RIGL",
+      "date": "2026-08-14",
+      "decision": "ACHETER",
+      "price_in": 40.79,
+      "score": 69,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 20,
+        "bilan": 40,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -913,7 +953,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 44,
+    "total_recommendations": 46,
     "verified": 2,
     "wins": 2,
     "losses": 0,
