@@ -589,7 +589,13 @@
         "management": 80,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 13.52,
+          "change": 9.65,
+          "date": "2026-08-17"
+        }
+      },
       "outcome": null
     },
     "GTLB_2026-07-17": {
@@ -606,7 +612,13 @@
         "management": 60,
         "valorisation": 80
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 42.62,
+          "change": 34.22,
+          "date": "2026-08-17"
+        }
+      },
       "outcome": null
     },
     "SOFI_2026-07-17": {
@@ -623,7 +635,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 18.29,
+          "change": 5.6,
+          "date": "2026-08-17"
+        }
+      },
       "outcome": null
     },
     "CELH_2026-07-20": {
@@ -914,6 +932,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "OVID_2026-08-17": {
+      "ticker": "OVID",
+      "date": "2026-08-17",
+      "decision": "ACHETER",
+      "price_in": 2.83,
+      "score": 59,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 25,
+        "cashflow": 35,
+        "bilan": 30,
+        "management": 70,
+        "valorisation": 80
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "RELY_2026-08-17": {
+      "ticker": "RELY",
+      "date": "2026-08-17",
+      "decision": "ACHETER",
+      "price_in": 26.3,
+      "score": 58,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 60,
+        "cashflow": 35,
+        "bilan": 50,
+        "management": 60,
+        "valorisation": 70
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -953,7 +1005,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 46,
+    "total_recommendations": 48,
     "verified": 2,
     "wins": 2,
     "losses": 0,

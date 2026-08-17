@@ -649,10 +649,10 @@
       "decision": "INVALIDE"
     },
     "SOUN": {
-      "last_scan": "2026-07-22",
-      "last_score": 53,
+      "last_scan": "2026-08-17",
+      "last_score": 50,
       "best_score": 53,
-      "scan_count": 2,
+      "scan_count": 3,
       "status": "neutral",
       "decision": "PRE_SCORE"
     },
@@ -2591,6 +2591,62 @@
       "scan_count": 1,
       "status": "neutral",
       "decision": "PRE_SCORE"
+    },
+    "BIGC": {
+      "last_scan": "2026-08-17",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OMER": {
+      "last_scan": "2026-08-17",
+      "last_score": 50,
+      "best_score": 50,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "SSYS": {
+      "last_scan": "2026-08-17",
+      "last_score": 23,
+      "best_score": 23,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
+    },
+    "SALT": {
+      "last_scan": "2026-08-17",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "OVID": {
+      "last_scan": "2026-08-17",
+      "last_score": 59,
+      "best_score": 59,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
+    },
+    "RELY": {
+      "last_scan": "2026-08-17",
+      "last_score": 58,
+      "best_score": 58,
+      "scan_count": 2,
+      "status": "interesting",
+      "decision": "ACHETER"
+    },
+    "GMAB": {
+      "last_scan": "2026-08-17",
+      "last_score": 45,
+      "best_score": 45,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
@@ -2598,7 +2654,7 @@
     "RIGL"
   ],
   "stats": {
-    "total_scans": 27,
+    "total_scans": 28,
     "total_tickers_seen": 1,
     "opportunities_found": 14,
     "created": "2026-06-23"
