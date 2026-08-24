@@ -2671,6 +2671,78 @@
       "scan_count": 1,
       "status": "invalid",
       "decision": "INVALIDE"
+    },
+    "FGEN": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "BTET": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "UGRO": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "SMAR": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "POET": {
+      "last_scan": "2026-08-24",
+      "last_score": 54,
+      "best_score": 54,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
+    },
+    "CLNE": {
+      "last_scan": "2026-08-24",
+      "last_score": 27,
+      "best_score": 27,
+      "scan_count": 1,
+      "status": "rejected",
+      "decision": "PRE_SCORE"
+    },
+    "NOVA": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "PTVCA": {
+      "last_scan": "2026-08-24",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "AMPX": {
+      "last_scan": "2026-08-24",
+      "last_score": 54,
+      "best_score": 54,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
