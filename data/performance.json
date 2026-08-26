@@ -243,6 +243,11 @@
           "price": 36.74,
           "change": -0.68,
           "date": "2026-07-27"
+        },
+        "60": {
+          "price": 46.75,
+          "change": 26.39,
+          "date": "2026-08-26"
         }
       },
       "outcome": null
@@ -266,6 +271,11 @@
           "price": 6.48,
           "change": 19.12,
           "date": "2026-07-27"
+        },
+        "60": {
+          "price": 7.95,
+          "change": 46.14,
+          "date": "2026-08-26"
         }
       },
       "outcome": null
@@ -813,7 +823,13 @@
         "management": 80,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 35.34,
+          "change": 30.31,
+          "date": "2026-08-26"
+        }
+      },
       "outcome": null
     },
     "RIGL_2026-07-29": {
@@ -1070,6 +1086,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "NMRK_2026-08-26": {
+      "ticker": "NMRK",
+      "date": "2026-08-26",
+      "decision": "SURVEILLER",
+      "price_in": 16.0,
+      "score": 64,
+      "scores": {
+        "croissance": 85,
+        "rentabilite": 35,
+        "cashflow": 70,
+        "bilan": 10,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -1109,7 +1142,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 50,
+    "total_recommendations": 51,
     "verified": 2,
     "wins": 2,
     "losses": 0,
