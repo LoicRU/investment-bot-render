@@ -299,6 +299,11 @@
           "price": 16.89,
           "change": -4.2,
           "date": "2026-07-29"
+        },
+        "60": {
+          "price": 17.04,
+          "change": -3.35,
+          "date": "2026-08-28"
         }
       },
       "outcome": null
@@ -322,6 +327,11 @@
           "price": 5.74,
           "change": -0.17,
           "date": "2026-07-29"
+        },
+        "60": {
+          "price": 7.38,
+          "change": 28.35,
+          "date": "2026-08-28"
         }
       },
       "outcome": null
@@ -846,7 +856,13 @@
         "management": 60,
         "valorisation": 80
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 46.79,
+          "change": 21.53,
+          "date": "2026-08-28"
+        }
+      },
       "outcome": null
     },
     "UMAC_2026-07-31": {
@@ -1103,6 +1119,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "SENS_2026-08-28": {
+      "ticker": "SENS",
+      "date": "2026-08-28",
+      "decision": "SURVEILLER",
+      "price_in": 9.28,
+      "score": 60,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 35,
+        "cashflow": 20,
+        "bilan": 30,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "MESO_2026-08-28": {
+      "ticker": "MESO",
+      "date": "2026-08-28",
+      "decision": "SURVEILLER",
+      "price_in": 17.43,
+      "score": 60,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 40,
+        "cashflow": 25,
+        "bilan": 10,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -1142,7 +1192,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 51,
+    "total_recommendations": 53,
     "verified": 2,
     "wins": 2,
     "losses": 0,
