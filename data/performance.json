@@ -355,6 +355,11 @@
           "price": 49.03,
           "change": 35.44,
           "date": "2026-07-31"
+        },
+        "60": {
+          "price": 59.1,
+          "change": 63.26,
+          "date": "2026-08-31"
         }
       },
       "outcome": null
@@ -879,7 +884,13 @@
         "management": 70,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 23.53,
+          "change": 14.72,
+          "date": "2026-08-31"
+        }
+      },
       "outcome": null
     },
     "CELH_2026-08-03": {
@@ -1153,6 +1164,40 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "CELH_2026-08-31": {
+      "ticker": "CELH",
+      "date": "2026-08-31",
+      "decision": "ACHETER",
+      "price_in": 31.83,
+      "score": 71,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 40,
+        "cashflow": 65,
+        "bilan": 20,
+        "management": 80,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
+    },
+    "GTLB_2026-08-31": {
+      "ticker": "GTLB",
+      "date": "2026-08-31",
+      "decision": "SURVEILLER",
+      "price_in": 45.48,
+      "score": 55,
+      "scores": {
+        "croissance": 70,
+        "rentabilite": 25,
+        "cashflow": 45,
+        "bilan": 100,
+        "management": 50,
+        "valorisation": 60
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -1192,7 +1237,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 53,
+    "total_recommendations": 55,
     "verified": 2,
     "wins": 2,
     "losses": 0,
