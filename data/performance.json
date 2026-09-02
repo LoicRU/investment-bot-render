@@ -383,6 +383,11 @@
           "price": 32.27,
           "change": 11.97,
           "date": "2026-08-03"
+        },
+        "60": {
+          "price": 33.59,
+          "change": 16.55,
+          "date": "2026-09-02"
         }
       },
       "outcome": null
@@ -406,6 +411,11 @@
           "price": 18.17,
           "change": -4.47,
           "date": "2026-08-03"
+        },
+        "60": {
+          "price": 19.44,
+          "change": 2.21,
+          "date": "2026-09-02"
         }
       },
       "outcome": null
@@ -429,6 +439,11 @@
           "price": 36.44,
           "change": -25.81,
           "date": "2026-08-03"
+        },
+        "60": {
+          "price": 37.78,
+          "change": -23.09,
+          "date": "2026-09-02"
         }
       },
       "outcome": null
@@ -907,7 +922,13 @@
         "management": 80,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 30.72,
+          "change": 5.17,
+          "date": "2026-09-02"
+        }
+      },
       "outcome": null
     },
     "ZETA_2026-08-03": {
@@ -924,7 +945,13 @@
         "management": 50,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 31.56,
+          "change": 46.11,
+          "date": "2026-09-02"
+        }
+      },
       "outcome": null
     },
     "RIGL_2026-08-05": {

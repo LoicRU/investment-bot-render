@@ -2871,6 +2871,30 @@
       "scan_count": 1,
       "status": "rejected",
       "decision": "PRE_SCORE"
+    },
+    "PWSC": {
+      "last_scan": "2026-09-02",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "NSGN": {
+      "last_scan": "2026-09-02",
+      "last_score": null,
+      "best_score": 0,
+      "scan_count": 1,
+      "status": "invalid",
+      "decision": "INVALIDE"
+    },
+    "CRSR": {
+      "last_scan": "2026-09-02",
+      "last_score": 45,
+      "best_score": 45,
+      "scan_count": 1,
+      "status": "neutral",
+      "decision": "PRE_SCORE"
     }
   },
   "watchlist": [
