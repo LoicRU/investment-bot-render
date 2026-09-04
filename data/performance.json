@@ -467,6 +467,11 @@
           "price": 29.54,
           "change": -10.92,
           "date": "2026-08-05"
+        },
+        "60": {
+          "price": 31.61,
+          "change": -4.67,
+          "date": "2026-09-04"
         }
       },
       "outcome": null
@@ -490,6 +495,11 @@
           "price": 6.95,
           "change": -26.38,
           "date": "2026-08-05"
+        },
+        "60": {
+          "price": 8.19,
+          "change": -13.24,
+          "date": "2026-09-04"
         }
       },
       "outcome": null
@@ -513,6 +523,11 @@
           "price": 3.96,
           "change": -12.39,
           "date": "2026-08-05"
+        },
+        "60": {
+          "price": 3.96,
+          "change": -12.39,
+          "date": "2026-09-04"
         }
       },
       "outcome": null
@@ -968,7 +983,13 @@
         "management": 60,
         "valorisation": 100
       },
-      "checks": {},
+      "checks": {
+        "30": {
+          "price": 48.5,
+          "change": 25.32,
+          "date": "2026-09-04"
+        }
+      },
       "outcome": null
     },
     "XERS_2026-08-07": {
@@ -1225,6 +1246,23 @@
       },
       "checks": {},
       "outcome": null
+    },
+    "RIGL_2026-09-04": {
+      "ticker": "RIGL",
+      "date": "2026-09-04",
+      "decision": "SURVEILLER",
+      "price_in": 48.5,
+      "score": 69,
+      "scores": {
+        "croissance": 100,
+        "rentabilite": 75,
+        "cashflow": 20,
+        "bilan": 40,
+        "management": 60,
+        "valorisation": 100
+      },
+      "checks": {},
+      "outcome": null
     }
   },
   "outcomes": [
@@ -1264,7 +1302,7 @@
     }
   ],
   "stats": {
-    "total_recommendations": 55,
+    "total_recommendations": 56,
     "verified": 2,
     "wins": 2,
     "losses": 0,
